@@ -53,7 +53,6 @@
     h1, h2, h3, h4, .font-display {
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    /* Custom subtle scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -68,7 +67,6 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #059669;
     }
-    /* Map Grid Pattern */
     .map-grid-bg {
       background-color: #E6F4EA;
       background-image: 
@@ -99,12 +97,11 @@
   <!-- ==================== TOP NAVIGATION BAR ==================== -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-emerald-900/10 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 sm:h-20 gap-3">
+      <div class="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-3">
         
         <!-- Brand Logo LOCALIN -->
         <a href="#" onclick="switchRole('buyer'); return false;" class="flex items-center gap-2.5 shrink-0 group">
           <div class="relative w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-localin-700 to-localin-900 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-            <!-- Custom SVG: Location Pin + Store Roof + Growth Leaf -->
             <svg class="w-6 h-6 text-white" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M14 2.5C8.75329 2.5 4.5 6.75329 4.5 12C4.5 18.6 14 25.5 14 25.5C14 25.5 23.5 18.6 23.5 12C23.5 6.75329 19.2467 2.5 14 2.5Z" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M9.5 11.5L14 8L18.5 11.5V16.5H9.5V11.5Z" fill="#F59E0B" stroke="#F59E0B" stroke-width="1.2" stroke-linejoin="round"/>
@@ -120,8 +117,8 @@
           </div>
         </a>
 
-        <!-- Search Bar (Visible mainly in Buyer mode) -->
-        <div id="navbar-search-wrapper" class="hidden md:flex flex-1 max-w-md mx-4">
+        <!-- Search Bar (Buyer Mode) -->
+        <div id="navbar-search-wrapper" class="hidden md:flex flex-1 max-w-md mx-2">
           <div class="relative w-full">
             <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
             <input 
@@ -134,10 +131,10 @@
           </div>
         </div>
 
-        <!-- Right Controls: GPS, Role Switcher, Cart, Auth -->
-        <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Right Controls -->
+        <div class="flex items-center gap-1.5 sm:gap-2.5">
           
-          <!-- GPS Nearby Trigger (Buyer Mode) -->
+          <!-- GPS Nearby Trigger -->
           <button id="nav-gps-btn" onclick="openGpsModal()" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-localin-50 hover:bg-localin-100 text-localin-800 border border-localin-200 text-xs font-semibold transition-colors" title="Deteksi UMKM Terdekat">
             <i data-lucide="map-pin" class="w-3.5 h-3.5 text-localin-600"></i>
             <span id="nav-gps-label">Yogyakarta (GPS)</span>
@@ -159,16 +156,27 @@
             </button>
           </div>
 
+          <!-- Buyer Order History Button -->
+          <button id="nav-orders-btn" onclick="openBuyerOrdersModal()" class="relative p-2.5 rounded-xl bg-white hover:bg-localin-50 border border-slate-200 text-slate-700 hover:text-localin-700 transition-colors" title="Riwayat Pesanan & Ulasan">
+            <i data-lucide="receipt-text" class="w-5 h-5"></i>
+            <span id="buyer-orders-badge" class="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full bg-localin-700 text-white font-bold text-[10px] flex items-center justify-center shadow-sm">0</span>
+          </button>
+
           <!-- Cart Button (Buyer) -->
           <button id="nav-cart-btn" onclick="toggleCartDrawer(true)" class="relative p-2.5 rounded-xl bg-white hover:bg-localin-50 border border-slate-200 text-slate-700 hover:text-localin-700 transition-colors" aria-label="Keranjang Belanja">
             <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-            <span id="cart-badge" class="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full bg-localin-amber text-slate-900 font-bold text-[11px] flex items-center justify-center shadow-sm">2</span>
+            <span id="cart-badge" class="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full bg-localin-amber text-slate-900 font-bold text-[11px] flex items-center justify-center shadow-sm">0</span>
+          </button>
+
+          <!-- AI API Key & Settings Button -->
+          <button onclick="openApiConfigModal()" class="p-2.5 rounded-xl bg-white hover:bg-amber-50 border border-slate-200 text-slate-700 hover:text-localin-amberDark transition-colors" title="Konfigurasi API Gemini & Reset Data">
+            <i data-lucide="key-round" class="w-5 h-5"></i>
           </button>
 
           <!-- User Profile / Login Button -->
-          <button onclick="openAuthModal()" id="nav-auth-btn" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-localin-700 hover:bg-localin-800 text-white text-xs sm:text-sm font-semibold shadow-sm transition-all">
+          <button onclick="openAuthModal()" id="nav-auth-btn" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-localin-700 hover:bg-localin-800 text-white text-xs sm:text-sm font-semibold shadow-sm transition-all">
             <i data-lucide="user-circle" class="w-4 h-4"></i>
-            <span id="nav-user-name" class="max-w-[90px] truncate">Masuk</span>
+            <span id="nav-user-name" class="max-w-[80px] truncate">Masuk</span>
           </button>
         </div>
       </div>
@@ -233,25 +241,25 @@
                   <i data-lucide="map-pin" class="w-4 h-4 text-localin-amberDark"></i>
                   <span>Cari UMKM Terdekat (GPS)</span>
                 </button>
-                <button onclick="switchRole('seller')" class="px-4 py-3 rounded-xl text-slate-600 hover:text-localin-800 font-semibold text-sm inline-flex items-center gap-1.5 transition-colors">
-                  <span>Buka Toko & Coba AI Suite</span>
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                <button onclick="openBuyerOrdersModal()" class="px-4 py-3 rounded-xl bg-amber-50 hover:bg-amber-100 text-localin-amberDark border border-amber-200 font-semibold text-sm inline-flex items-center gap-1.5 transition-colors">
+                  <i data-lucide="history" class="w-4 h-4"></i>
+                  <span>Riwayat Pesanan</span>
                 </button>
               </div>
 
               <!-- Trust Metrics -->
               <div class="grid grid-cols-3 gap-4 pt-3 max-w-lg border-t border-emerald-900/10">
                 <div>
-                  <p class="font-display font-extrabold text-xl sm:text-2xl text-localin-800">1.450+</p>
-                  <p class="text-xs text-slate-500">UMKM Terverifikasi</p>
+                  <p class="font-display font-extrabold text-xl sm:text-2xl text-localin-800" id="hero-metric-stores">4 Mitra</p>
+                  <p class="text-xs text-slate-500">UMKM Terdaftar</p>
                 </div>
                 <div>
-                  <p class="font-display font-extrabold text-xl sm:text-2xl text-localin-800">4.9/5</p>
-                  <p class="text-xs text-slate-500">Kepuasan Pembeli</p>
+                  <p class="font-display font-extrabold text-xl sm:text-2xl text-localin-800" id="hero-metric-products">8 Produk</p>
+                  <p class="text-xs text-slate-500">Katalog Tersedia</p>
                 </div>
                 <div>
-                  <p class="font-display font-extrabold text-xl sm:text-2xl text-localin-amberDark">AI-Powered</p>
-                  <p class="text-xs text-slate-500">Rekomendasi & Pemasaran</p>
+                  <p class="font-display font-extrabold text-xl sm:text-2xl text-localin-amberDark" id="hero-ai-status">Mode Simulasi</p>
+                  <p class="text-xs text-slate-500">Status Engine AI</p>
                 </div>
               </div>
             </div>
@@ -271,7 +279,7 @@
                       <p class="text-xs text-slate-500">Asisten pintar pencari produk lokal</p>
                     </div>
                   </div>
-                  <span class="px-2.5 py-1 rounded-full bg-localin-50 text-localin-700 text-[11px] font-bold border border-localin-200">Gemini AI</span>
+                  <button onclick="openApiConfigModal()" id="ai-mode-badge" class="px-2.5 py-1 rounded-full bg-localin-50 hover:bg-localin-100 text-localin-700 text-[11px] font-bold border border-localin-200 transition-colors">Atur API Key</button>
                 </div>
 
                 <!-- Preference Chips -->
@@ -304,10 +312,8 @@
                   <div class="flex items-start gap-2.5">
                     <i data-lucide="bot" class="w-4 h-4 text-localin-700 mt-0.5 shrink-0"></i>
                     <div class="text-xs text-slate-700 leading-relaxed space-y-2 w-full">
-                      <p id="ai-buyer-explanation">Berdasarkan preferensi <strong>"Teman ngopi & kerja santai sore hari"</strong>, AI LOCALIN merekomendasikan perpaduan kopi arabika lokal dengan camilan renyah:</p>
-                      <div id="ai-recommended-cards" class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-                        <!-- Injected via JS -->
-                      </div>
+                      <p id="ai-buyer-explanation">Pilih kebutuhan atau klik tombol <strong>Rekomendasikan</strong> untuk memfilter produk katalog secara cerdas.</p>
+                      <div id="ai-recommended-cards" class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1"></div>
                     </div>
                   </div>
                 </div>
@@ -326,7 +332,7 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
             <h2 class="font-display font-bold text-xl sm:text-2xl text-slate-900">Katalog Produk UMKM Pilihan</h2>
-            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Menampilkan produk terbaik dari pelaku usaha lokal di sekitar Anda</p>
+            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Data tersimpan otomatis di perangkat Anda (localStorage)</p>
           </div>
 
           <div class="flex flex-wrap items-center gap-2.5">
@@ -338,7 +344,7 @@
 
             <!-- Sort Dropdown -->
             <select id="sort-products-select" onchange="renderMarketplace()" class="px-3.5 py-2 rounded-xl text-xs font-semibold border border-slate-200 bg-white text-slate-700 focus:outline-none focus:border-localin-600">
-              <option value="recommended">Urutkan: Rekomendasi AI</option>
+              <option value="recommended">Urutkan: Terbaru</option>
               <option value="nearest">Jarak Terdekat (GPS)</option>
               <option value="price-low">Harga Terendah</option>
               <option value="price-high">Harga Tertinggi</option>
@@ -358,9 +364,7 @@
         </div>
 
         <!-- Product Grid -->
-        <div id="marketplace-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          <!-- Populated dynamically by JS -->
-        </div>
+        <div id="marketplace-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
 
         <!-- Empty State -->
         <div id="marketplace-empty" class="hidden text-center py-16 bg-white rounded-3xl border border-slate-200/80">
@@ -389,7 +393,7 @@
             </div>
             <div>
               <div class="flex items-center gap-2">
-                <span class="px-2.5 py-0.5 rounded-full bg-localin-amber text-slate-900 text-[11px] font-bold">Mitra UMKM Terverifikasi</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-localin-amber text-slate-900 text-[11px] font-bold">Mitra UMKM</span>
                 <span class="text-xs text-emerald-100" id="seller-header-city">Kasihan, Bantul • DI Yogyakarta</span>
               </div>
               <h1 class="font-display font-extrabold text-xl sm:text-2xl mt-1" id="seller-header-storename">Kopi Merapi & Kriya Nusantara</h1>
@@ -449,26 +453,24 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
                 <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-soft">
                   <div class="flex items-center justify-between">
-                    <span class="text-xs font-medium text-slate-500">Total Pendapatan</span>
+                    <span class="text-xs font-medium text-slate-500">Total Pendapatan Pesanan</span>
                     <div class="w-9 h-9 rounded-xl bg-localin-50 text-localin-700 flex items-center justify-center">
                       <i data-lucide="wallet" class="w-4 h-4"></i>
                     </div>
                   </div>
-                  <p class="font-display font-extrabold text-xl text-slate-900 mt-2" id="metric-seller-revenue">Rp 4.850.000</p>
-                  <p class="text-[11px] text-localin-600 font-medium mt-1 flex items-center gap-1">
-                    <i data-lucide="trending-up" class="w-3 h-3"></i> +18.4% dibanding bulan lalu
-                  </p>
+                  <p class="font-display font-extrabold text-xl text-slate-900 mt-2" id="metric-seller-revenue">Rp 0</p>
+                  <p class="text-[11px] text-localin-600 font-medium mt-1">Dihitung dari total pesanan masuk</p>
                 </div>
 
                 <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-soft">
                   <div class="flex items-center justify-between">
-                    <span class="text-xs font-medium text-slate-500">Pesanan Aktif</span>
+                    <span class="text-xs font-medium text-slate-500">Total Pesanan</span>
                     <div class="w-9 h-9 rounded-xl bg-amber-50 text-localin-amberDark flex items-center justify-center">
                       <i data-lucide="package-check" class="w-4 h-4"></i>
                     </div>
                   </div>
-                  <p class="font-display font-extrabold text-xl text-slate-900 mt-2" id="metric-seller-orders">3 Pesanan</p>
-                  <p class="text-[11px] text-slate-500 mt-1">Siap diproses & dikirim</p>
+                  <p class="font-display font-extrabold text-xl text-slate-900 mt-2" id="metric-seller-orders">0 Pesanan</p>
+                  <p class="text-[11px] text-slate-500 mt-1">Tersimpan di localStorage</p>
                 </div>
 
                 <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-soft">
@@ -478,63 +480,32 @@
                       <i data-lucide="layers" class="w-4 h-4"></i>
                     </div>
                   </div>
-                  <p class="font-display font-extrabold text-xl text-slate-900 mt-2" id="metric-seller-products">8 Produk</p>
+                  <p class="font-display font-extrabold text-xl text-slate-900 mt-2" id="metric-seller-products">0 Produk</p>
                   <p class="text-[11px] text-slate-500 mt-1">Tersinkron ke Marketplace</p>
                 </div>
 
                 <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-soft">
                   <div class="flex items-center justify-between">
-                    <span class="text-xs font-medium text-slate-500">Rating Toko</span>
+                    <span class="text-xs font-medium text-slate-500">Ulasan Pelanggan</span>
                     <div class="w-9 h-9 rounded-xl bg-yellow-50 text-amber-500 flex items-center justify-center">
                       <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
                     </div>
                   </div>
-                  <p class="font-display font-extrabold text-xl text-slate-900 mt-2">4.9 / 5.0</p>
-                  <p class="text-[11px] text-slate-500 mt-1">Dari 128 ulasan pembeli</p>
+                  <p class="font-display font-extrabold text-xl text-slate-900 mt-2" id="metric-seller-reviews">0 Ulasan</p>
+                  <p class="text-[11px] text-slate-500 mt-1">Rating rata-rata toko</p>
                 </div>
               </div>
 
-              <!-- Performance Chart & Quick AI CTA -->
+              <!-- Dynamic Sales by Category Chart & Quick AI CTA -->
               <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-soft">
-                  <div class="flex items-center justify-between mb-5">
+                  <div class="flex items-center justify-between mb-4">
                     <div>
-                      <h3 class="font-display font-bold text-base text-slate-900">Grafik Penjualan Mingguan</h3>
-                      <p class="text-xs text-slate-500">Performa transaksi 7 hari terakhir</p>
-                    </div>
-                    <span class="px-2.5 py-1 rounded-lg bg-localin-50 text-localin-700 text-xs font-semibold">Minggu Ini</span>
-                  </div>
-                  <!-- Clean CSS Bar Chart -->
-                  <div class="grid grid-cols-7 gap-3 items-end h-44 pt-4 px-2 border-b border-slate-100">
-                    <div class="flex flex-col items-center gap-2 h-full justify-end">
-                      <div class="w-full max-w-[34px] bg-localin-200 hover:bg-localin-600 transition-colors rounded-t-lg" style="height: 45%;" title="Senin: Rp 420.000"></div>
-                      <span class="text-[11px] font-medium text-slate-500">Sen</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-2 h-full justify-end">
-                      <div class="w-full max-w-[34px] bg-localin-200 hover:bg-localin-600 transition-colors rounded-t-lg" style="height: 62%;" title="Selasa: Rp 580.000"></div>
-                      <span class="text-[11px] font-medium text-slate-500">Sel</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-2 h-full justify-end">
-                      <div class="w-full max-w-[34px] bg-localin-200 hover:bg-localin-600 transition-colors rounded-t-lg" style="height: 55%;" title="Rabu: Rp 510.000"></div>
-                      <span class="text-[11px] font-medium text-slate-500">Rab</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-2 h-full justify-end">
-                      <div class="w-full max-w-[34px] bg-localin-500 hover:bg-localin-700 transition-colors rounded-t-lg" style="height: 78%;" title="Kamis: Rp 750.000"></div>
-                      <span class="text-[11px] font-medium text-slate-500">Kam</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-2 h-full justify-end">
-                      <div class="w-full max-w-[34px] bg-localin-500 hover:bg-localin-700 transition-colors rounded-t-lg" style="height: 70%;" title="Jumat: Rp 690.000"></div>
-                      <span class="text-[11px] font-medium text-slate-500">Jum</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-2 h-full justify-end">
-                      <div class="w-full max-w-[34px] bg-localin-700 hover:bg-localin-800 transition-colors rounded-t-lg" style="height: 95%;" title="Sabtu: Rp 980.000"></div>
-                      <span class="text-[11px] font-bold text-localin-800">Sab</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-2 h-full justify-end">
-                      <div class="w-full max-w-[34px] bg-localin-amber hover:bg-localin-amberDark transition-colors rounded-t-lg" style="height: 88%;" title="Minggu: Rp 920.000"></div>
-                      <span class="text-[11px] font-bold text-localin-amberDark">Min</span>
+                      <h3 class="font-display font-bold text-base text-slate-900">Statistik Stok & Distribusi Produk per Kategori</h3>
+                      <p class="text-xs text-slate-500">Dihitung otomatis secara real-time dari data katalog produk Anda</p>
                     </div>
                   </div>
+                  <div id="seller-dynamic-chart" class="space-y-3 pt-2"></div>
                 </div>
 
                 <!-- AI Assistant Shortcut Card -->
@@ -545,7 +516,7 @@
                     </div>
                     <h3 class="font-display font-bold text-lg text-slate-900">Tingkatkan Penjualan dengan AI</h3>
                     <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-                      Bingung bikin caption promosi atau menentukan target pembeli? Gunakan 4 asisten AI khusus UMKM secara gratis.
+                      Buat caption promosi, strategi pemasaran, analisis target pasar, dan jadwal konten 7 hari. Mendukung API Gemini asli maupun mode template cerdas offline.
                     </p>
                   </div>
                   <div class="space-y-2 mt-5">
@@ -567,7 +538,7 @@
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                   <div>
                     <h2 class="font-display font-bold text-lg text-slate-900">Katalog Produk Toko Anda</h2>
-                    <p class="text-xs text-slate-500">Setiap penambahan, edit, atau penghapusan produk langsung muncul di halaman Pembeli.</p>
+                    <p class="text-xs text-slate-500">Perubahan otomatis tersimpan di localStorage dan langsung muncul di halaman Pembeli.</p>
                   </div>
                   <button onclick="openProductFormModal()" class="px-4 py-2.5 rounded-xl bg-localin-700 hover:bg-localin-800 text-white text-xs sm:text-sm font-semibold shadow-sm inline-flex items-center gap-2 self-start">
                     <i data-lucide="plus-circle" class="w-4 h-4"></i>
@@ -586,9 +557,7 @@
                         <th class="py-3 px-3 text-right">Aksi</th>
                       </tr>
                     </thead>
-                    <tbody id="seller-products-tbody" class="divide-y divide-slate-100 text-sm">
-                      <!-- Populated dynamically -->
-                    </tbody>
+                    <tbody id="seller-products-tbody" class="divide-y divide-slate-100 text-sm"></tbody>
                   </table>
                 </div>
               </div>
@@ -603,8 +572,11 @@
                       <i data-lucide="cpu" class="w-3.5 h-3.5"></i> LOCALIN AI Engine
                     </div>
                     <h2 class="font-display font-bold text-xl text-slate-900">AI Marketing Suite untuk UMKM</h2>
-                    <p class="text-xs text-slate-500">Hasilkan materi promosi, strategi bisnis, riset pasar, hingga jadwal konten 7 hari dalam hitungan detik.</p>
+                    <p class="text-xs text-slate-500">Masukkan API Key Gemini Anda melalui tombol ikon kunci di atas untuk respons AI generatif penuh, atau gunakan mode simulasi lokal.</p>
                   </div>
+                  <button onclick="openApiConfigModal()" class="px-3.5 py-2 rounded-xl bg-localin-50 hover:bg-localin-100 text-localin-800 border border-localin-200 text-xs font-semibold shrink-0">
+                    Konfigurasi Gemini API
+                  </button>
                 </div>
 
                 <!-- 4 AI Tool Sub-Tabs -->
@@ -806,11 +778,9 @@
               <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-soft">
                 <div class="mb-5">
                   <h2 class="font-display font-bold text-lg text-slate-900">Pesanan Masuk dari Pembeli</h2>
-                  <p class="text-xs text-slate-500">Pesanan yang baru dibuat pembeli di Marketplace otomatis muncul di sini.</p>
+                  <p class="text-xs text-slate-500">Pesanan yang baru dibuat pembeli di Marketplace otomatis tersimpan dan muncul di sini.</p>
                 </div>
-                <div id="seller-orders-list" class="space-y-4">
-                  <!-- Populated dynamically -->
-                </div>
+                <div id="seller-orders-list" class="space-y-4"></div>
               </div>
             </div>
 
@@ -819,11 +789,9 @@
               <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-soft">
                 <div class="mb-5">
                   <h2 class="font-display font-bold text-lg text-slate-900">Ulasan & Rating Pelanggan</h2>
-                  <p class="text-xs text-slate-500">Bangun kepercayaan pembeli lokal dengan membalas ulasan secara ramah.</p>
+                  <p class="text-xs text-slate-500">Ulasan yang dikirim pembeli melalui halaman Riwayat Pesanan muncul di sini dan dapat Anda balas.</p>
                 </div>
-                <div id="seller-reviews-list" class="space-y-4">
-                  <!-- Populated dynamically -->
-                </div>
+                <div id="seller-reviews-list" class="space-y-4"></div>
               </div>
             </div>
 
@@ -831,38 +799,36 @@
             <div id="seller-panel-profile" class="seller-panel hidden space-y-5">
               <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-soft">
                 <h2 class="font-display font-bold text-lg text-slate-900 mb-1">Profil & Titik Lokasi Toko UMKM</h2>
-                <p class="text-xs text-slate-500 mb-6">Informasi ini digunakan fitur GPS Pembeli untuk menghitung jarak toko Anda.</p>
+                <p class="text-xs text-slate-500 mb-6">Informasi ini tersimpan di localStorage dan digunakan fitur GPS Pembeli untuk menghitung jarak toko Anda.</p>
 
                 <form onsubmit="saveSellerProfile(event)" class="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div class="space-y-4">
                     <div>
                       <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Toko UMKM</label>
-                      <input type="text" id="prof-store-name" value="Kopi Merapi & Kriya Nusantara" required class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-localin-600 focus:outline-none" />
+                      <input type="text" id="prof-store-name" required class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-localin-600 focus:outline-none" />
                     </div>
                     <div>
                       <label class="block text-xs font-semibold text-slate-700 mb-1">Kota / Kecamatan</label>
-                      <input type="text" id="prof-store-city" value="Kasihan, Bantul • DI Yogyakarta" required class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-localin-600 focus:outline-none" />
+                      <input type="text" id="prof-store-city" required class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-localin-600 focus:outline-none" />
                     </div>
                     <div>
                       <label class="block text-xs font-semibold text-slate-700 mb-1">Alamat Lengkap Toko / Workshop</label>
-                      <textarea id="prof-store-address" rows="3" required class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-localin-600 focus:outline-none">Jl. Kaliurang KM 8.5 No. 42, Tambakan, Sinduharjo, Kec. Ngaglik / Kasihan, DI Yogyakarta 55581</textarea>
+                      <textarea id="prof-store-address" rows="3" required class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-localin-600 focus:outline-none"></textarea>
                     </div>
                     <div>
                       <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi Singkat Toko</label>
-                      <textarea id="prof-store-desc" rows="2" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-localin-600 focus:outline-none">Menghadirkan kopi sangrai pilihan petani lereng Merapi dan kerajinan tangan ramah lingkungan karya pengrajin lokal Yogyakarta.</textarea>
+                      <textarea id="prof-store-desc" rows="2" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-localin-600 focus:outline-none"></textarea>
                     </div>
                   </div>
 
                   <div class="space-y-4">
                     <label class="block text-xs font-semibold text-slate-700">Pin Lokasi GPS Toko (Klik peta untuk geser titik)</label>
                     <div onclick="moveSellerMapPin(event)" class="relative h-56 rounded-2xl map-grid-bg border border-localin-200 overflow-hidden cursor-crosshair select-none">
-                      <!-- Decorative roads -->
                       <div class="absolute inset-x-0 top-1/2 h-3 bg-white/80 -translate-y-1/2"></div>
                       <div class="absolute inset-y-0 left-1/3 w-3 bg-white/80"></div>
                       <div class="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-white/90 text-[11px] font-semibold text-localin-800 shadow-xs">
                         Koordinat: <span id="prof-coords-text">-7.8124, 110.3342</span>
                       </div>
-                      <!-- Store Pin -->
                       <div id="seller-map-pin" class="absolute transition-all duration-300 -translate-x-1/2 -translate-y-full" style="left: 52%; top: 48%;">
                         <div class="px-2.5 py-1 rounded-lg bg-localin-800 text-white text-[10px] font-bold shadow-md whitespace-nowrap mb-1">Lokasi Toko Anda</div>
                         <div class="w-7 h-7 mx-auto rounded-full bg-localin-amber border-2 border-white shadow-md flex items-center justify-center text-slate-900">
@@ -900,18 +866,20 @@
               <h1 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900">Monitoring Ekosistem LOCALIN</h1>
             </div>
           </div>
-          <div class="flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-localin-50 px-3.5 py-2 rounded-xl border border-localin-200">
-            <span class="w-2 h-2 rounded-full bg-localin-500 animate-ping"></span>
-            <span>Sistem Marketplace & AI Online</span>
+          <div class="flex items-center gap-2">
+            <button onclick="exportReportCsv()" class="px-3.5 py-2 rounded-xl bg-localin-700 hover:bg-localin-800 text-white text-xs font-semibold flex items-center gap-1.5">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i>
+              <span>Unduh Laporan Transaksi (CSV)</span>
+            </button>
           </div>
         </div>
 
         <!-- Admin KPI Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-soft">
-            <span class="text-xs font-medium text-slate-500">Total UMKM Terdaftar</span>
-            <p class="font-display font-extrabold text-2xl text-slate-900 mt-1" id="admin-stat-stores">1.456 Mitra</p>
-            <span class="text-[11px] text-localin-600 font-semibold">+24 mitra minggu ini</span>
+            <span class="text-xs font-medium text-slate-500">Total Mitra UMKM</span>
+            <p class="font-display font-extrabold text-2xl text-slate-900 mt-1" id="admin-stat-stores">4 Mitra</p>
+            <span class="text-[11px] text-localin-600 font-semibold">Tersimpan di sistem</span>
           </div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-soft">
             <span class="text-xs font-medium text-slate-500">Total Produk Aktif</span>
@@ -919,107 +887,112 @@
             <span class="text-[11px] text-slate-500">Tersinkronisasi real-time</span>
           </div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-soft">
-            <span class="text-xs font-medium text-slate-500">Volume Transaksi</span>
-            <p class="font-display font-extrabold text-2xl text-localin-700 mt-1" id="admin-stat-gmv">Rp 148.920.000</p>
-            <span class="text-[11px] text-localin-600 font-semibold">Bulan Berjalan</span>
+            <span class="text-xs font-medium text-slate-500">Total Volume Transaksi</span>
+            <p class="font-display font-extrabold text-2xl text-localin-700 mt-1" id="admin-stat-gmv">Rp 0</p>
+            <span class="text-[11px] text-localin-600 font-semibold" id="admin-stat-order-count">0 Transaksi tercatat</span>
           </div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-soft">
-            <span class="text-xs font-medium text-slate-500">Penggunaan AI Tools</span>
-            <p class="font-display font-extrabold text-2xl text-localin-amberDark mt-1">9.340 Generasi</p>
-            <span class="text-[11px] text-slate-500">Caption, Strategi & Planner</span>
+            <span class="text-xs font-medium text-slate-500">Pengguna Terdaftar</span>
+            <p class="font-display font-extrabold text-2xl text-localin-amberDark mt-1" id="admin-stat-users">3 Akun</p>
+            <span class="text-[11px] text-slate-500">Admin, Penjual & Pembeli</span>
           </div>
         </div>
 
-        <!-- Admin Verification Table & Popular Categories -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          
-          <!-- Verification & Moderation -->
-          <div class="lg:col-span-8 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-soft">
-            <div class="flex items-center justify-between mb-4">
-              <div>
-                <h2 class="font-display font-bold text-lg text-slate-900">Verifikasi & Moderasi Toko UMKM</h2>
-                <p class="text-xs text-slate-500">Setujui atau tangguhkan pendaftaran mitra UMKM baru di platform.</p>
-              </div>
-            </div>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-500">
-                    <th class="py-3 px-3">Nama Usaha UMKM</th>
-                    <th class="py-3 px-3">Kategori</th>
-                    <th class="py-3 px-3">Lokasi</th>
-                    <th class="py-3 px-3">Status</th>
-                    <th class="py-3 px-3 text-right">Moderasi</th>
-                  </tr>
-                </thead>
-                <tbody id="admin-stores-tbody" class="divide-y divide-slate-100 text-xs sm:text-sm">
-                  <!-- Populated by JS -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Popular Categories Analytics -->
-          <div class="lg:col-span-4 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-soft space-y-5">
-            <div>
-              <h2 class="font-display font-bold text-lg text-slate-900">Kategori Terpopuler</h2>
-              <p class="text-xs text-slate-500">Distribusi transaksi & pencarian pembeli</p>
-            </div>
-
-            <div class="space-y-4">
-              <div>
-                <div class="flex justify-between text-xs font-semibold mb-1">
-                  <span>🍲 Kuliner & Camilan</span>
-                  <span class="text-localin-700">38%</span>
-                </div>
-                <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                  <div class="h-full bg-localin-700 rounded-full" style="width: 38%"></div>
-                </div>
-              </div>
-
-              <div>
-                <div class="flex justify-between text-xs font-semibold mb-1">
-                  <span>☕ Kopi & Minuman Lokal</span>
-                  <span class="text-localin-700">27%</span>
-                </div>
-                <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                  <div class="h-full bg-localin-500 rounded-full" style="width: 27%"></div>
-                </div>
-              </div>
-
-              <div>
-                <div class="flex justify-between text-xs font-semibold mb-1">
-                  <span>🧶 Fashion & Kriya</span>
-                  <span class="text-localin-amberDark">19%</span>
-                </div>
-                <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                  <div class="h-full bg-localin-amber rounded-full" style="width: 19%"></div>
-                </div>
-              </div>
-
-              <div>
-                <div class="flex justify-between text-xs font-semibold mb-1">
-                  <span>🌿 Kecantikan Alami</span>
-                  <span class="text-slate-600">10%</span>
-                </div>
-                <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                  <div class="h-full bg-teal-500 rounded-full" style="width: 10%"></div>
-                </div>
-              </div>
-
-              <div>
-                <div class="flex justify-between text-xs font-semibold mb-1">
-                  <span>🌾 Pertanian & Olahan</span>
-                  <span class="text-slate-600">6%</span>
-                </div>
-                <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                  <div class="h-full bg-emerald-400 rounded-full" style="width: 6%"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <!-- Admin Sub-Tabs -->
+        <div class="flex flex-wrap gap-2">
+          <button onclick="switchAdminTab('stores')" id="admtab-stores" class="admin-subtab px-4 py-2 rounded-xl text-xs font-bold bg-localin-700 text-white">Verifikasi Toko UMKM</button>
+          <button onclick="switchAdminTab('products')" id="admtab-products" class="admin-subtab px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200">Moderasi Produk</button>
+          <button onclick="switchAdminTab('transactions')" id="admtab-transactions" class="admin-subtab px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200">Semua Transaksi</button>
+          <button onclick="switchAdminTab('users')" id="admtab-users" class="admin-subtab px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200">Pengelolaan Pengguna</button>
         </div>
+
+        <!-- Admin Panel 1: Verifikasi Toko -->
+        <div id="admin-panel-stores" class="admin-panel bg-white p-6 rounded-2xl border border-slate-200/80 shadow-soft">
+          <div class="mb-4">
+            <h2 class="font-display font-bold text-lg text-slate-900">Verifikasi & Moderasi Toko UMKM</h2>
+            <p class="text-xs text-slate-500">Setujui atau tangguhkan status verifikasi mitra UMKM di platform.</p>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-500">
+                  <th class="py-3 px-3">Nama Usaha UMKM</th>
+                  <th class="py-3 px-3">Kategori</th>
+                  <th class="py-3 px-3">Lokasi</th>
+                  <th class="py-3 px-3">Status</th>
+                  <th class="py-3 px-3 text-right">Moderasi</th>
+                </tr>
+              </thead>
+              <tbody id="admin-stores-tbody" class="divide-y divide-slate-100 text-xs sm:text-sm"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Admin Panel 2: Moderasi Produk -->
+        <div id="admin-panel-products" class="admin-panel hidden bg-white p-6 rounded-2xl border border-slate-200/80 shadow-soft">
+          <div class="mb-4">
+            <h2 class="font-display font-bold text-lg text-slate-900">Pengelolaan Seluruh Produk Marketplace</h2>
+            <p class="text-xs text-slate-500">Pantau dan hapus produk yang tidak sesuai ketentuan komunitas.</p>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-500">
+                  <th class="py-3 px-3">Nama Produk</th>
+                  <th class="py-3 px-3">Toko UMKM</th>
+                  <th class="py-3 px-3">Kategori</th>
+                  <th class="py-3 px-3">Harga</th>
+                  <th class="py-3 px-3 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="admin-products-tbody" class="divide-y divide-slate-100 text-xs sm:text-sm"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Admin Panel 3: Semua Transaksi -->
+        <div id="admin-panel-transactions" class="admin-panel hidden bg-white p-6 rounded-2xl border border-slate-200/80 shadow-soft">
+          <div class="mb-4">
+            <h2 class="font-display font-bold text-lg text-slate-900">Laporan Transaksi Marketplace</h2>
+            <p class="text-xs text-slate-500">Rekapitulasi transaksi nyata yang terjadi pada sesi penyimpanan localStorage.</p>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-500">
+                  <th class="py-3 px-3">ID Pesanan</th>
+                  <th class="py-3 px-3">Pembeli</th>
+                  <th class="py-3 px-3">Item</th>
+                  <th class="py-3 px-3">Total</th>
+                  <th class="py-3 px-3">Status</th>
+                </tr>
+              </thead>
+              <tbody id="admin-transactions-tbody" class="divide-y divide-slate-100 text-xs sm:text-sm"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Admin Panel 4: Pengelolaan Pengguna -->
+        <div id="admin-panel-users" class="admin-panel hidden bg-white p-6 rounded-2xl border border-slate-200/80 shadow-soft">
+          <div class="mb-4">
+            <h2 class="font-display font-bold text-lg text-slate-900">Daftar Pengguna Ekosistem</h2>
+            <p class="text-xs text-slate-500">Akun yang terdaftar atau masuk melalui formulir autentikasi LOCALIN.</p>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-500">
+                  <th class="py-3 px-3">Nama Pengguna</th>
+                  <th class="py-3 px-3">Email</th>
+                  <th class="py-3 px-3">Peran</th>
+                  <th class="py-3 px-3">Status Akun</th>
+                </tr>
+              </thead>
+              <tbody id="admin-users-tbody" class="divide-y divide-slate-100 text-xs sm:text-sm"></tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -1048,18 +1021,17 @@
           </ul>
         </div>
         <div>
-          <h4 class="font-display font-bold text-sm text-slate-900 mb-3">Dukungan UMKM</h4>
+          <h4 class="font-display font-bold text-sm text-slate-900 mb-3">Pengaturan Sistem</h4>
           <ul class="space-y-2 text-xs text-slate-600">
-            <li>Pusat Edukasi Digital UMKM</li>
-            <li>Panduan Foto & Branding Produk</li>
-            <li>Kemitraan Komunitas Daerah</li>
+            <li><button onclick="openApiConfigModal()" class="hover:text-localin-700 text-left">Konfigurasi Gemini API Key</button></li>
+            <li><button onclick="resetLocalStorageData()" class="hover:text-red-600 text-left">Reset Data Default (localStorage)</button></li>
             <li class="text-localin-700 font-semibold">halo@localin.id</li>
           </ul>
         </div>
       </div>
       <div class="border-t border-slate-100 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
         <p>© 2026 LOCALIN Indonesia. Memberdayakan UMKM Lokal dengan AI.</p>
-        <p>Dibuat dengan semangat #BanggaBuatanIndonesia</p>
+        <p>Penyimpanan Lokal Aktif (localStorage) • #BanggaBuatanIndonesia</p>
       </div>
     </div>
   </footer>
@@ -1070,7 +1042,7 @@
 
   <!-- 1. PRODUCT DETAIL & INTERACTIVE STORE MAP MODAL -->
   <div id="product-detail-modal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-white rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl border border-slate-200 my-auto animate-fadeIn">
+    <div class="bg-white rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl border border-slate-200 my-auto">
       <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
         <span class="text-xs font-bold uppercase tracking-wider text-localin-700" id="modal-prod-category">Kategori</span>
         <button onclick="closeModal('product-detail-modal')" class="p-1.5 rounded-xl hover:bg-slate-100 text-slate-500">
@@ -1098,15 +1070,13 @@
 
             <!-- Store Info Box -->
             <div class="p-3.5 rounded-2xl bg-localin-50/70 border border-localin-200/80 space-y-2">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                  <div class="w-8 h-8 rounded-xl bg-localin-700 text-white flex items-center justify-center">
-                    <i data-lucide="store" class="w-4 h-4"></i>
-                  </div>
-                  <div>
-                    <p class="text-xs font-bold text-slate-900" id="modal-prod-store">Nama Toko</p>
-                    <p class="text-[11px] text-slate-500" id="modal-prod-address">Alamat toko...</p>
-                  </div>
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-xl bg-localin-700 text-white flex items-center justify-center shrink-0">
+                  <i data-lucide="store" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-slate-900" id="modal-prod-store">Nama Toko</p>
+                  <p class="text-[11px] text-slate-500" id="modal-prod-address">Alamat toko...</p>
                 </div>
               </div>
             </div>
@@ -1127,23 +1097,20 @@
               <i data-lucide="map-pin" class="w-4 h-4 text-localin-700"></i> Peta Lokasi Toko UMKM
             </h3>
             <a id="modal-gmaps-link" href="https://maps.google.com" target="_blank" rel="noopener" class="text-xs font-semibold text-localin-700 hover:underline flex items-center gap-1">
-              <span>Buka Rute Navigasi</span>
+              <span>Buka Google Maps</span>
               <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
             </a>
           </div>
           <div class="relative h-40 rounded-2xl map-grid-bg border border-localin-200 overflow-hidden">
             <div class="absolute inset-x-0 top-1/2 h-2.5 bg-white/80"></div>
             <div class="absolute inset-y-0 left-2/3 w-2.5 bg-white/80"></div>
-            <!-- User Location Dot -->
             <div class="absolute left-[25%] top-[60%] flex flex-col items-center">
               <span class="px-2 py-0.5 rounded bg-slate-800 text-white text-[10px] font-semibold mb-1">Posisi Anda</span>
               <span class="w-3.5 h-3.5 rounded-full bg-blue-600 border-2 border-white shadow"></span>
             </div>
-            <!-- Dashed Route Line -->
             <svg class="absolute inset-0 w-full h-full pointer-events-none">
               <line x1="26%" y1="68%" x2="68%" y2="42%" stroke="#047857" stroke-width="2.5" stroke-dasharray="6 4" />
             </svg>
-            <!-- Store Location Pin -->
             <div class="absolute left-[65%] top-[24%] flex flex-col items-center">
               <span class="px-2.5 py-0.5 rounded-lg bg-localin-800 text-white text-[10px] font-bold shadow mb-1" id="modal-map-store-tag">Toko UMKM</span>
               <div class="w-7 h-7 rounded-full bg-localin-amber border-2 border-white shadow-md flex items-center justify-center text-slate-900">
@@ -1156,9 +1123,7 @@
         <!-- Buyer Reviews -->
         <div class="border-t border-slate-100 pt-5">
           <h3 class="font-display font-bold text-sm text-slate-900 mb-3">Ulasan Pembeli Lokal</h3>
-          <div id="modal-prod-reviews" class="space-y-2.5">
-            <!-- Populated by JS -->
-          </div>
+          <div id="modal-prod-reviews" class="space-y-2.5"></div>
         </div>
       </div>
     </div>
@@ -1174,7 +1139,7 @@
           </div>
           <div>
             <h3 class="font-display font-bold text-base text-slate-900">Cari UMKM Terdekat (GPS)</h3>
-            <p class="text-xs text-slate-500">Deteksi otomatis toko lokal di sekitar lokasi Anda</p>
+            <p class="text-xs text-slate-500">Gunakan GPS perangkat atau pilih area lokasi Anda</p>
           </div>
         </div>
         <button onclick="closeModal('gps-modal')" class="p-1.5 rounded-xl hover:bg-slate-100 text-slate-500">
@@ -1182,8 +1147,8 @@
         </button>
       </div>
 
-      <!-- Simulated Interactive Radar Map -->
-      <div class="relative h-52 rounded-2xl map-grid-bg border border-localin-200 overflow-hidden flex items-center justify-center">
+      <!-- Radar Map -->
+      <div class="relative h-48 rounded-2xl map-grid-bg border border-localin-200 overflow-hidden flex items-center justify-center">
         <div class="w-36 h-36 rounded-full border border-localin-500/30 bg-localin-500/5 flex items-center justify-center">
           <div class="w-20 h-20 rounded-full border border-localin-500/40 bg-localin-500/10 flex items-center justify-center">
             <div class="relative">
@@ -1192,26 +1157,25 @@
             </div>
           </div>
         </div>
-        <!-- Nearby Store Pins -->
-        <div class="absolute top-6 left-10 bg-white px-2.5 py-1 rounded-xl shadow-sm border border-localin-200 text-[11px] font-bold text-localin-800 flex items-center gap-1">
-          <span class="w-2 h-2 rounded-full bg-localin-amber"></span> Kopi Merapi (1.2 km)
-        </div>
-        <div class="absolute bottom-8 right-8 bg-white px-2.5 py-1 rounded-xl shadow-sm border border-localin-200 text-[11px] font-bold text-localin-800 flex items-center gap-1">
-          <span class="w-2 h-2 rounded-full bg-localin-amber"></span> Bakpia Tugu Sari (2.1 km)
-        </div>
-        <div class="absolute top-12 right-12 bg-white px-2.5 py-1 rounded-xl shadow-sm border border-localin-200 text-[11px] font-bold text-localin-800 flex items-center gap-1">
-          <span class="w-2 h-2 rounded-full bg-localin-amber"></span> Kriya Bambu (3.4 km)
+        <div class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-xs px-3 py-2 rounded-xl border border-localin-200 text-xs text-slate-700 flex items-center justify-between">
+          <span>Koordinat Aktif:</span>
+          <strong id="gps-live-coords" class="text-localin-800">-7.8124, 110.3342</strong>
         </div>
       </div>
 
+      <button onclick="detectRealBrowserGps()" id="btn-real-gps" class="w-full py-2.5 px-4 rounded-xl bg-amber-50 hover:bg-amber-100 text-localin-amberDark border border-amber-200 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-colors">
+        <i data-lucide="crosshair" class="w-4 h-4"></i>
+        <span>Deteksi Lokasi GPS Perangkat Saya (Izinkan Lokasi)</span>
+      </button>
+
       <div class="flex flex-col sm:flex-row gap-2.5">
         <select id="gps-area-select" class="flex-1 px-3.5 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl font-medium">
-          <option value="Kasihan, Yogyakarta">📍 Kasihan, DI Yogyakarta (Lokasi Saat Ini)</option>
-          <option value="Malioboro, Yogyakarta">📍 Kawasan Malioboro, Yogyakarta</option>
-          <option value="Sleman Utara, Yogyakarta">📍 Ngaglik, Sleman Utara</option>
+          <option value="Kasihan, Yogyakarta|-7.8124|110.3342">📍 Kasihan, Bantul, DI Yogyakarta</option>
+          <option value="Malioboro, Yogyakarta|-7.7926|110.3658">📍 Kawasan Malioboro, Kota Yogyakarta</option>
+          <option value="Ngaglik, Sleman|-7.7150|110.3850">📍 Ngaglik, Sleman Utara</option>
         </select>
         <button onclick="applyGpsLocation()" class="px-4 py-2.5 rounded-xl bg-localin-700 hover:bg-localin-800 text-white text-xs sm:text-sm font-semibold shadow-sm">
-          Terapkan Lokasi GPS
+          Terapkan Area
         </button>
       </div>
     </div>
@@ -1231,12 +1195,8 @@
       </div>
 
       <div class="flex-1 overflow-y-auto p-6 space-y-5">
-        <!-- Cart Items -->
-        <div id="cart-items-container" class="space-y-3">
-          <!-- Populated dynamically -->
-        </div>
+        <div id="cart-items-container" class="space-y-3"></div>
 
-        <!-- Checkout Form -->
         <div id="checkout-form-section" class="border-t border-slate-100 pt-5 space-y-4">
           <h4 class="font-display font-bold text-sm text-slate-900">Pengiriman & Pembayaran</h4>
           <div>
@@ -1288,7 +1248,23 @@
     </div>
   </div>
 
-  <!-- 4. SELLER ADD/EDIT PRODUCT MODAL -->
+  <!-- 4. BUYER ORDER HISTORY & REVIEW SUBMISSION MODAL -->
+  <div id="buyer-orders-modal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 my-auto space-y-5">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div>
+          <h3 class="font-display font-bold text-lg text-slate-900">Riwayat Pesanan & Beri Ulasan</h3>
+          <p class="text-xs text-slate-500">Pantau status pesanan Anda dan kirim ulasan untuk mitra UMKM</p>
+        </div>
+        <button onclick="closeModal('buyer-orders-modal')" class="p-1.5 rounded-xl hover:bg-slate-100 text-slate-500">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="buyer-orders-list" class="max-h-[65vh] overflow-y-auto space-y-4"></div>
+    </div>
+  </div>
+
+  <!-- 5. SELLER ADD/EDIT PRODUCT MODAL -->
   <div id="product-form-modal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 my-auto">
       <div class="flex items-center justify-between pb-4 border-b border-slate-100">
@@ -1301,7 +1277,6 @@
       <form onsubmit="saveProductForm(event)" class="space-y-4 mt-4">
         <input type="hidden" id="edit-prod-id" value="" />
         
-        <!-- Photo Upload / Preset Preview -->
         <div>
           <label class="block text-xs font-semibold text-slate-700 mb-1.5">Foto Produk (Upload File atau Pilih Preset)</label>
           <div class="flex items-center gap-4">
@@ -1357,7 +1332,7 @@
     </div>
   </div>
 
-  <!-- 5. LOGIN / REGISTER MULTI-ROLE MODAL -->
+  <!-- 6. LOGIN / REGISTER MULTI-ROLE MODAL -->
   <div id="auth-modal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-5">
       <div class="flex items-center justify-between">
@@ -1365,7 +1340,7 @@
           <div class="w-9 h-9 rounded-xl bg-localin-700 text-white flex items-center justify-center font-display font-bold">L</div>
           <div>
             <h3 class="font-display font-bold text-base text-slate-900">Akun Ekosistem LOCALIN</h3>
-            <p class="text-[11px] text-slate-500">Masuk atau daftar cepat untuk menguji setiap peran</p>
+            <p class="text-[11px] text-slate-500">Data sesi pengguna tersimpan otomatis di browser</p>
           </div>
         </div>
         <button onclick="closeModal('auth-modal')" class="p-1.5 rounded-xl hover:bg-slate-100 text-slate-500">
@@ -1373,7 +1348,6 @@
         </button>
       </div>
 
-      <!-- Auth Mode Toggle -->
       <div class="grid grid-cols-2 bg-slate-100 p-1 rounded-xl text-xs font-semibold">
         <button type="button" onclick="setAuthTab('login')" id="auth-tab-login" class="py-2 rounded-lg bg-white text-localin-800 shadow-xs">Masuk Akun</button>
         <button type="button" onclick="setAuthTab('register')" id="auth-tab-register" class="py-2 rounded-lg text-slate-600">Daftar Baru</button>
@@ -1407,17 +1381,61 @@
     </div>
   </div>
 
+  <!-- 7. GEMINI API KEY CONFIGURATION MODAL (NO HARDCODED KEY) -->
+  <div id="api-config-modal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-9 h-9 rounded-xl bg-localin-amberLight text-localin-amberDark flex items-center justify-center">
+            <i data-lucide="key-round" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-base text-slate-900">Konfigurasi Gemini API</h3>
+            <p class="text-[11px] text-slate-500">Kunci disimpan lokal di browser Anda (session/local)</p>
+          </div>
+        </div>
+        <button onclick="closeModal('api-config-modal')" class="p-1.5 rounded-xl hover:bg-slate-100 text-slate-500">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-600 leading-relaxed">
+        Untuk alasan keamanan, API Key tidak ditanam di dalam kode HTML. Jika Anda memiliki <strong>Google Gemini API Key</strong>, tempelkan di bawah untuk mengaktifkan generasi AI langsung. Jika kosong, sistem otomatis menjalankan <strong>Mode Template Cerdas Lokal</strong>.
+      </p>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 mb-1">Google Gemini API Key</label>
+        <input type="password" id="gemini-api-key-input" placeholder="AIzaSy..." class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-localin-600 focus:outline-none" />
+      </div>
+
+      <div class="flex items-center justify-between gap-2 pt-2">
+        <button type="button" onclick="clearGeminiApiKey()" class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold">Hapus Key</button>
+        <button type="button" onclick="saveGeminiApiKey()" class="px-5 py-2.5 rounded-xl bg-localin-700 hover:bg-localin-800 text-white text-xs font-semibold shadow-sm">Simpan Konfigurasi</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ==================== APPLICATION JAVASCRIPT ==================== -->
   <script>
-    // -------------------- 1. CENTRALIZED APPLICATION STATE --------------------
-    const state = {
-      currentRole: 'buyer', // 'buyer' | 'seller' | 'admin'
+    const STORAGE_KEY = 'localin_app_state_v2';
+    const API_STORAGE_KEY = 'localin_gemini_api_key';
+
+    // -------------------- 1. DEFAULT SEED DATA & PERSISTENCE --------------------
+    const defaultState = {
+      currentRole: 'buyer',
       user: {
         loggedIn: true,
         name: 'Rina M.',
+        email: 'rina.maharani@localin.id',
         role: 'buyer'
       },
+      registeredUsers: [
+        { name: 'Admin Pusat LOCALIN', email: 'admin@localin.id', role: 'Admin', status: 'Aktif' },
+        { name: 'Kopi Merapi & Kriya Nusantara', email: 'mitra.merapi@localin.id', role: 'Penjual UMKM', status: 'Aktif' },
+        { name: 'Rina Maharani', email: 'rina.maharani@localin.id', role: 'Pembeli', status: 'Aktif' }
+      ],
       gpsLocation: 'Kasihan, Yogyakarta',
+      userCoords: { lat: -7.8124, lng: 110.3342 },
       selectedCategory: 'Semua',
       searchQuery: '',
       onlyNearby: false,
@@ -1436,6 +1454,8 @@
           price: 68000,
           stock: 32,
           rating: 4.9,
+          lat: -7.8050,
+          lng: 110.3380,
           distanceKm: 1.2,
           storeName: 'Kopi Merapi & Kriya Nusantara',
           address: 'Kasihan, Bantul • DI Yogyakarta',
@@ -1449,6 +1469,8 @@
           price: 42000,
           stock: 45,
           rating: 4.9,
+          lat: -7.7980,
+          lng: 110.3550,
           distanceKm: 2.1,
           storeName: 'Dapur Bakpia Tugu Sari',
           address: 'Ngampilan, Kota Yogyakarta',
@@ -1462,6 +1484,8 @@
           price: 135000,
           stock: 14,
           rating: 4.8,
+          lat: -7.8350,
+          lng: 110.3420,
           distanceKm: 3.4,
           storeName: 'Kopi Merapi & Kriya Nusantara',
           address: 'Kasihan, Bantul • DI Yogyakarta',
@@ -1475,6 +1499,8 @@
           price: 35000,
           stock: 50,
           rating: 4.9,
+          lat: -7.8280,
+          lng: 110.3520,
           distanceKm: 2.8,
           storeName: 'Sekar Ayu Natural Care',
           address: 'Sewon, Bantul • DI Yogyakarta',
@@ -1488,6 +1514,8 @@
           price: 89000,
           stock: 22,
           rating: 5.0,
+          lat: -7.7810,
+          lng: 110.3210,
           distanceKm: 4.3,
           storeName: 'Tani Lebah Nusantara',
           address: 'Gamping, Sleman • DI Yogyakarta',
@@ -1501,6 +1529,8 @@
           price: 24000,
           stock: 60,
           rating: 4.8,
+          lat: -7.8190,
+          lng: 110.3280,
           distanceKm: 1.8,
           storeName: 'Camilan Bu Harjo',
           address: 'Kasihan, Bantul • DI Yogyakarta',
@@ -1514,6 +1544,8 @@
           price: 115000,
           stock: 18,
           rating: 4.9,
+          lat: -7.7650,
+          lng: 110.4150,
           distanceKm: 6.2,
           storeName: 'Tenun Lurik Prasojo',
           address: 'Klaten / Perbatasan DIY',
@@ -1527,6 +1559,8 @@
           price: 38000,
           stock: 40,
           rating: 4.9,
+          lat: -7.8320,
+          lng: 110.3480,
           distanceKm: 3.1,
           storeName: 'Kopi Merapi & Kriya Nusantara',
           address: 'Kasihan, Bantul • DI Yogyakarta',
@@ -1535,31 +1569,21 @@
         }
       ],
       cart: [
-        { productId: 'p1', qty: 1 },
-        { productId: 'p6', qty: 2 }
+        { productId: 'p1', qty: 1 }
       ],
       orders: [
         {
           id: 'ORD-2026-881',
-          buyerName: 'Dimas Pratama',
-          buyerAddress: 'Jl. Parangtritis KM 4, Sewon, Bantul',
-          itemsText: '1x Kopi Arabika Merapi Honey 250g, 1x Wedang Uwuh Rempah',
-          total: 116000,
+          buyerName: 'Rina Maharani',
+          buyerAddress: 'Jl. Tamantirto No. 18, Kasihan, Bantul',
+          itemsText: '1x Kopi Arabika Merapi Honey 250g',
+          productName: 'Kopi Arabika Merapi Honey 250g',
+          total: 78000,
           shipping: 'Kurir Lokal',
           payment: 'QRIS Instan',
-          status: 'Menunggu Diproses',
-          date: 'Hari ini, 07:15 WIB'
-        },
-        {
-          id: 'ORD-2026-879',
-          buyerName: 'Siti Nurhaliza',
-          buyerAddress: 'Ambil Langsung di Toko',
-          itemsText: '1x Tas Anyaman Pandan Etnik Natural',
-          total: 135000,
-          shipping: 'Ambil di Toko',
-          payment: 'Transfer Bank',
-          status: 'Dikemas',
-          date: 'Kemarin, 16:40 WIB'
+          status: 'Selesai',
+          reviewed: false,
+          date: '25 Nov 2026'
         }
       ],
       reviews: [
@@ -1570,14 +1594,6 @@
           rating: 5,
           comment: 'Aroma kopinya wangi banget pas baru dibuka! Pengiriman kurir lokal juga super cepat sampai rumah.',
           reply: 'Terima kasih banyak Kak Aulia! Senang sekali kopinya cocok di selera. Ditunggu pesanan berikutnya ya.'
-        },
-        {
-          id: 'rev2',
-          buyer: 'Hendra Wijaya',
-          product: 'Tas Anyaman Pandan Etnik Natural',
-          rating: 5,
-          comment: 'Anyamannya rapi dan kokoh, cocok banget buat kado ibu saya. Bangga produk UMKM lokal!',
-          reply: ''
         }
       ],
       adminStores: [
@@ -1588,9 +1604,74 @@
       ]
     };
 
-    // -------------------- 2. UTILITY FUNCTIONS --------------------
+    function loadState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          return { ...structuredClone(defaultState), ...JSON.parse(saved) };
+        }
+      } catch (e) {
+        console.warn('Gagal membaca localStorage, memakai state awal.');
+      }
+      return structuredClone(defaultState);
+    }
+
+    let state = loadState();
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.warn('Kapasitas penyimpanan browser penuh.');
+      }
+      syncGlobalCounters();
+    }
+
+    function resetLocalStorageData() {
+      localStorage.removeItem(STORAGE_KEY);
+      state = structuredClone(defaultState);
+      saveState();
+      switchRole('buyer');
+      showToast('Data berhasil dikembalikan ke pengaturan awal!');
+    }
+
+    function syncGlobalCounters() {
+      const totalCartQty = state.cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('cart-badge').innerText = totalCartQty;
+      document.getElementById('buyer-orders-badge').innerText = state.orders.length;
+      document.getElementById('hero-metric-stores').innerText = `${state.adminStores.length} Mitra`;
+      document.getElementById('hero-metric-products').innerText = `${state.products.length} Produk`;
+
+      const hasKey = Boolean(localStorage.getItem(API_STORAGE_KEY));
+      const statusText = hasKey ? 'Gemini Live' : 'Mode Simulasi';
+      document.getElementById('hero-ai-status').innerText = statusText;
+      document.getElementById('ai-mode-badge').innerText = hasKey ? 'Gemini Aktif ✓' : 'Atur API Key';
+    }
+
+    // -------------------- 2. UTILITY & HAVERSINE GPS DISTANCE --------------------
     function formatRupiah(num) {
       return 'Rp ' + Number(num).toLocaleString('id-ID');
+    }
+
+    function calculateDistanceKm(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return Number((R * c).toFixed(1));
+    }
+
+    function recalculateProductDistances() {
+      state.products.forEach((p, idx) => {
+        if (p.lat && p.lng) {
+          p.distanceKm = calculateDistanceKm(state.userCoords.lat, state.userCoords.lng, p.lat, p.lng);
+        } else {
+          p.distanceKm = Number((1.2 + idx * 0.6).toFixed(1));
+        }
+      });
     }
 
     function showToast(message, type = 'success') {
@@ -1621,18 +1702,42 @@
 
     function copyTextFromId(elementId) {
       const text = document.getElementById(elementId).innerText;
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
+      navigator.clipboard?.writeText(text).catch(() => {});
       showToast('Teks berhasil disalin ke clipboard!');
     }
 
-    // -------------------- 3. MULTI-ROLE NAVIGATION --------------------
+    // -------------------- 3. GEMINI API KEY MANAGEMENT --------------------
+    function openApiConfigModal() {
+      document.getElementById('gemini-api-key-input').value = localStorage.getItem(API_STORAGE_KEY) || '';
+      document.getElementById('api-config-modal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function saveGeminiApiKey() {
+      const val = document.getElementById('gemini-api-key-input').value.trim();
+      if (val) {
+        localStorage.setItem(API_STORAGE_KEY, val);
+        showToast('Gemini API Key disimpan di browser Anda!');
+      } else {
+        localStorage.removeItem(API_STORAGE_KEY);
+        showToast('API Key dikosongkan. Menggunakan mode simulasi cerdas.', 'info');
+      }
+      syncGlobalCounters();
+      closeModal('api-config-modal');
+    }
+
+    function clearGeminiApiKey() {
+      localStorage.removeItem(API_STORAGE_KEY);
+      document.getElementById('gemini-api-key-input').value = '';
+      syncGlobalCounters();
+      closeModal('api-config-modal');
+      showToast('API Key dihapus dari browser.');
+    }
+
+    // -------------------- 4. MULTI-ROLE NAVIGATION --------------------
     function switchRole(role) {
       state.currentRole = role;
+      saveState();
       ['buyer', 'seller', 'admin'].forEach(r => {
         const view = document.getElementById(`view-${r}`);
         const btn = document.getElementById(`role-btn-${r}`);
@@ -1647,12 +1752,12 @@
         }
       });
 
-      // Toggle buyer-specific navbar controls
       const isBuyer = role === 'buyer';
       document.getElementById('navbar-search-wrapper').classList.toggle('md:flex', isBuyer);
       document.getElementById('mobile-search-bar').classList.toggle('hidden', !isBuyer);
       document.getElementById('nav-gps-btn').classList.toggle('sm:inline-flex', isBuyer);
       document.getElementById('nav-cart-btn').classList.toggle('hidden', !isBuyer);
+      document.getElementById('nav-orders-btn').classList.toggle('hidden', !isBuyer);
 
       if (role === 'buyer') renderMarketplace();
       if (role === 'seller') renderSellerDashboard();
@@ -1662,7 +1767,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // -------------------- 4. BUYER MARKETPLACE & AI RECOMMENDATION --------------------
+    // -------------------- 5. BUYER MARKETPLACE & AI RECOMMENDATION --------------------
     function selectAiPref(btn, text) {
       document.querySelectorAll('.ai-chip').forEach(c => {
         c.classList.remove('bg-localin-50', 'text-localin-800', 'border-localin-200');
@@ -1676,7 +1781,7 @@
 
     async function runAiBuyerRecommendation() {
       const promptInput = document.getElementById('ai-buyer-prompt').value.trim();
-      if (!promptInput) return;
+      if (!promptInput || state.products.length === 0) return;
 
       const btn = document.getElementById('btn-ai-recommend');
       const expEl = document.getElementById('ai-buyer-explanation');
@@ -1686,46 +1791,54 @@
       btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>Menganalisis...</span>`;
       lucide.createIcons();
 
-      // Smart local matching + optional Gemini API enhancement
       const q = promptInput.toLowerCase();
-      let matched = [];
-      if (q.includes('kopi') || q.includes('kerja') || q.includes('ngopi') || q.includes('santai')) {
-        matched = [state.products[0], state.products[5]];
-      } else if (q.includes('oleh') || q.includes('kado') || q.includes('khas')) {
-        matched = [state.products[1], state.products[7]];
-      } else if (q.includes('kulit') || q.includes('alami') || q.includes('sehat') || q.includes('madu')) {
-        matched = [state.products[3], state.products[4]];
-      } else if (q.includes('fashion') || q.includes('tas') || q.includes('kriya') || q.includes('formal')) {
-        matched = [state.products[2], state.products[6]];
-      } else {
-        matched = [state.products[0], state.products[1]];
-      }
+      let matched = state.products.filter(p => 
+        p.name.toLowerCase().includes(q) || 
+        p.category.toLowerCase().includes(q) || 
+        p.desc.toLowerCase().includes(q)
+      );
 
-      // Attempt Gemini API if available in runtime, fallback gracefully
-      let aiText = `Berdasarkan kebutuhan <strong>"${promptInput}"</strong>, AI LOCALIN memilihkan 2 produk UMKM unggulan terdekat untuk Anda:`;
-      try {
-        const apiKey = "";
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-        const catalogSummary = state.products.map(p => `${p.name} (${p.category}, ${formatRupiah(p.price)})`).join('; ');
-        const payload = {
-          contents: [{ parts: [{ text: `Pembeli mencari: "${promptInput}". Dari katalog UMKM ini: [${catalogSummary}], berikan 1 kalimat singkat ramah dalam Bahasa Indonesia mengapa produk pilihan berikut cocok untuknya.` }] }]
-        };
-        const res = await fetch(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (res.ok) {
-          const data = await res.json();
-          const generated = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (generated) aiText = generated;
+      if (matched.length < 2) {
+        if (q.includes('kopi') || q.includes('kerja') || q.includes('ngopi') || q.includes('santai')) {
+          matched = state.products.filter(p => p.category === 'Kopi & Minuman' || p.category === 'Kuliner');
+        } else if (q.includes('oleh') || q.includes('kado') || q.includes('khas')) {
+          matched = state.products.filter(p => p.category === 'Kuliner' || p.category === 'Kopi & Minuman');
+        } else if (q.includes('kulit') || q.includes('alami') || q.includes('sehat') || q.includes('madu')) {
+          matched = state.products.filter(p => p.category === 'Kecantikan Alami' || p.category === 'Pertanian & Olahan');
+        } else if (q.includes('fashion') || q.includes('tas') || q.includes('kriya') || q.includes('formal')) {
+          matched = state.products.filter(p => p.category === 'Fashion & Kriya');
         }
-      } catch (e) {
-        // Fallback seamlessly to smart local explanation
+      }
+      if (matched.length === 0) matched = state.products;
+      const topTwo = matched.slice(0, 2);
+
+      const userApiKey = localStorage.getItem(API_STORAGE_KEY);
+      let aiText = `Hasil pencocokan katalog lokal untuk kebutuhan <strong>"${promptInput}"</strong> (Mode Simulasi Lokal):`;
+
+      if (userApiKey) {
+        try {
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(userApiKey)}`;
+          const catalogSummary = topTwo.map(p => `${p.name} (${p.category}, ${formatRupiah(p.price)})`).join('; ');
+          const payload = {
+            contents: [{ parts: [{ text: `Pembeli mencari: "${promptInput}". Dari produk UMKM berikut: [${catalogSummary}], berikan 1 kalimat singkat ramah dalam Bahasa Indonesia mengapa kedua produk tersebut cocok.` }] }]
+          };
+          const res = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (res.ok) {
+            const data = await res.json();
+            const generated = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (generated) aiText = generated;
+          }
+        } catch (e) {
+          // Fallback to local explanation
+        }
       }
 
       expEl.innerHTML = aiText;
-      cardsEl.innerHTML = matched.filter(Boolean).map(p => `
+      cardsEl.innerHTML = topTwo.map(p => `
         <div onclick="openProductDetail('${p.id}')" class="cursor-pointer bg-white p-2.5 rounded-xl border border-emerald-900/10 hover:border-localin-500 transition-all flex items-center gap-2.5 shadow-2xs">
           <img src="${p.image}" alt="${p.name}" class="w-11 h-11 rounded-lg object-cover shrink-0" />
           <div class="min-w-0 flex-1">
@@ -1764,7 +1877,7 @@
       const btn = document.getElementById('filter-nearby-btn');
       if (state.onlyNearby) {
         btn.className = 'px-3.5 py-2 rounded-xl text-xs font-semibold border border-localin-600 bg-localin-50 text-localin-800 transition-all inline-flex items-center gap-1.5';
-        showToast('Menampilkan UMKM dalam radius < 5 km dari lokasi Anda');
+        showToast('Menampilkan UMKM dalam radius < 5 km dari koordinat Anda');
       } else {
         btn.className = 'px-3.5 py-2 rounded-xl text-xs font-semibold border border-slate-200 bg-white text-slate-700 hover:border-localin-500 transition-all inline-flex items-center gap-1.5';
       }
@@ -1810,20 +1923,16 @@
       grid.innerHTML = filtered.map(p => `
         <article class="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-soft hover:shadow-card hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
           <div>
-            <!-- Product Image -->
             <div onclick="openProductDetail('${p.id}')" class="relative aspect-[4/3] bg-slate-100 overflow-hidden cursor-pointer">
               <img src="${p.image}" alt="${p.name}" onerror="this.src='https://placehold.co/600x450/ECFDF5/047857?text=Produk+UMKM'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <!-- Distance GPS Badge -->
               <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-xs text-localin-800 text-[11px] font-bold shadow-xs flex items-center gap-1">
                 <i data-lucide="map-pin" class="w-3 h-3 text-localin-600"></i> ${p.distanceKm} km
               </span>
-              <!-- Category Badge -->
               <span class="absolute bottom-3 left-3 px-2.5 py-0.5 rounded-lg bg-slate-900/70 backdrop-blur-xs text-white text-[10px] font-medium">
                 ${p.category}
               </span>
             </div>
 
-            <!-- Card Body -->
             <div class="p-4 space-y-2">
               <div class="flex items-center justify-between text-[11px] text-slate-500">
                 <span class="font-medium text-localin-700 truncate max-w-[70%]">${p.storeName}</span>
@@ -1842,19 +1951,18 @@
             </div>
           </div>
 
-          <!-- Card Footer -->
           <div class="px-4 pb-4 pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
             <div>
-              <span class="text-[10px] text-slate-400 block">Harga Lokal</span>
+              <span class="text-[10px] text-slate-400 block">Stok: ${p.stock} pcs</span>
               <span class="font-display font-extrabold text-base text-localin-800">${formatRupiah(p.price)}</span>
             </div>
             <div class="flex items-center gap-1.5">
               <button onclick="openProductDetail('${p.id}')" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors" title="Detail Produk & Peta">
                 <i data-lucide="eye" class="w-4 h-4"></i>
               </button>
-              <button onclick="addToCart('${p.id}')" class="px-3 py-2 rounded-xl bg-localin-700 hover:bg-localin-800 text-white text-xs font-semibold shadow-xs transition-all flex items-center gap-1">
+              <button onclick="addToCart('${p.id}')" ${p.stock <= 0 ? 'disabled' : ''} class="px-3 py-2 rounded-xl bg-localin-700 hover:bg-localin-800 disabled:bg-slate-300 text-white text-xs font-semibold shadow-xs transition-all flex items-center gap-1">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                <span>Keranjang</span>
+                <span>${p.stock > 0 ? 'Keranjang' : 'Habis'}</span>
               </button>
             </div>
           </div>
@@ -1869,7 +1977,7 @@
 
       document.getElementById('modal-prod-category').innerText = p.category;
       document.getElementById('modal-prod-img').src = p.image;
-      document.getElementById('modal-prod-rating').innerText = `${p.rating} (Ulasan Terverifikasi)`;
+      document.getElementById('modal-prod-rating').innerText = `${p.rating} (Ulasan Pembeli)`;
       document.getElementById('modal-prod-stock').innerText = `Stok: ${p.stock}`;
       document.getElementById('modal-prod-distance').innerText = `📍 ${p.distanceKm} km dari Anda`;
       document.getElementById('modal-prod-title').innerText = p.name;
@@ -1887,47 +1995,89 @@
       };
 
       const revContainer = document.getElementById('modal-prod-reviews');
-      revContainer.innerHTML = state.reviews.map(r => `
+      revContainer.innerHTML = state.reviews.length > 0 ? state.reviews.map(r => `
         <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/70 text-xs">
           <div class="flex items-center justify-between font-bold text-slate-800">
-            <span>${r.buyer}</span>
-            <span class="text-amber-500">★★★★★</span>
+            <span>${r.buyer} <span class="font-normal text-slate-400">(${r.product})</span></span>
+            <span class="text-amber-500">${'★'.repeat(r.rating || 5)}</span>
           </div>
           <p class="text-slate-600 mt-1">${r.comment}</p>
         </div>
-      `).join('');
+      `).join('') : `<p class="text-xs text-slate-400">Belum ada ulasan untuk produk ini.</p>`;
 
       document.getElementById('product-detail-modal').classList.remove('hidden');
       lucide.createIcons();
     }
 
+    // -------------------- 6. REAL GEOLOCATION & GPS MODAL --------------------
     function openGpsModal() {
+      document.getElementById('gps-live-coords').innerText = `${state.userCoords.lat.toFixed(4)}, ${state.userCoords.lng.toFixed(4)}`;
       document.getElementById('gps-modal').classList.remove('hidden');
       lucide.createIcons();
     }
 
-    function applyGpsLocation() {
-      const area = document.getElementById('gps-area-select').value;
-      state.gpsLocation = area;
-      document.getElementById('nav-gps-label').innerText = `${area.split(',')[0]} (GPS)`;
-      // Slightly recalculate simulated distances for interactivity
-      state.products.forEach((p, idx) => {
-        p.distanceKm = Number((1.1 + ((idx * 0.7 + area.length * 0.1) % 4.5)).toFixed(1));
-      });
-      closeModal('gps-modal');
-      renderMarketplace();
-      showToast(`Lokasi GPS diperbarui ke ${area}`);
+    function detectRealBrowserGps() {
+      if (!navigator.geolocation) {
+        showToast('Browser Anda tidak mendukung Geolocation API.', 'info');
+        return;
+      }
+      const btn = document.getElementById('btn-real-gps');
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>Meminta Izin Lokasi GPS...</span>`;
+      lucide.createIcons();
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          state.userCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+          state.gpsLocation = `GPS Aktif (${pos.coords.latitude.toFixed(2)}, ${pos.coords.longitude.toFixed(2)})`;
+          document.getElementById('nav-gps-label').innerText = 'GPS Perangkat Aktif';
+          document.getElementById('gps-live-coords').innerText = `${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+          recalculateProductDistances();
+          saveState();
+          renderMarketplace();
+          btn.innerHTML = `<i data-lucide="check-circle-2" class="w-4 h-4"></i><span>Lokasi GPS Berhasil Diperbarui</span>`;
+          lucide.createIcons();
+          showToast('Jarak seluruh toko UMKM dihitung ulang berdasarkan GPS perangkat Anda!');
+        },
+        (err) => {
+          btn.innerHTML = `<i data-lucide="crosshair" class="w-4 h-4"></i><span>Deteksi Lokasi GPS Perangkat Saya (Izinkan Lokasi)</span>`;
+          lucide.createIcons();
+          showToast('Izin lokasi ditolak atau tidak tersedia. Silakan pilih area manual di bawah.', 'info');
+        },
+        { timeout: 8000 }
+      );
     }
 
-    // -------------------- 5. CART & DIRECT CHECKOUT --------------------
+    function applyGpsLocation() {
+      const val = document.getElementById('gps-area-select').value;
+      const [label, latStr, lngStr] = val.split('|');
+      state.gpsLocation = label;
+      state.userCoords = { lat: parseFloat(latStr), lng: parseFloat(lngStr) };
+      document.getElementById('nav-gps-label').innerText = `${label.split(',')[0]} (GPS)`;
+      recalculateProductDistances();
+      saveState();
+      closeModal('gps-modal');
+      renderMarketplace();
+      showToast(`Lokasi GPS diperbarui ke ${label}`);
+    }
+
+    // -------------------- 7. CART, CHECKOUT & BUYER ORDER HISTORY --------------------
     function addToCart(productId) {
+      const prod = state.products.find(p => p.id === productId);
+      if (!prod || prod.stock <= 0) {
+        showToast('Stok produk sedang habis.', 'info');
+        return;
+      }
       const existing = state.cart.find(c => c.productId === productId);
       if (existing) {
+        if (existing.qty >= prod.stock) {
+          showToast('Jumlah melebihi stok tersedia.', 'info');
+          return;
+        }
         existing.qty += 1;
       } else {
         state.cart.push({ productId, qty: 1 });
       }
-      updateCartBadge();
+      saveState();
       showToast('Produk ditambahkan ke keranjang belanja!');
     }
 
@@ -1938,13 +2088,8 @@
       if (state.cart[idx].qty <= 0) {
         state.cart.splice(idx, 1);
       }
-      updateCartBadge();
+      saveState();
       renderCart();
-    }
-
-    function updateCartBadge() {
-      const totalQty = state.cart.reduce((sum, item) => sum + item.qty, 0);
-      document.getElementById('cart-badge').innerText = totalQty;
     }
 
     function toggleCartDrawer(open) {
@@ -2010,7 +2155,7 @@
         return;
       }
 
-      const buyerName = document.getElementById('checkout-buyer-name').value.trim() || 'Pembeli Lokal';
+      const buyerName = document.getElementById('checkout-buyer-name').value.trim() || state.user.name;
       const buyerAddress = document.getElementById('checkout-buyer-address').value.trim() || 'Yogyakarta';
       const shipping = document.getElementById('checkout-shipping').value.split(' (')[0];
       const payment = document.getElementById('checkout-payment').value;
@@ -2018,36 +2163,106 @@
 
       let subtotal = 0;
       const itemDescriptions = [];
-      state.cart.forEach(item => {
+      let firstProdName = 'Produk UMKM';
+
+      state.cart.forEach((item, index) => {
         const p = state.products.find(prod => prod.id === item.productId);
         if (p) {
+          if (index === 0) firstProdName = p.name;
           subtotal += p.price * item.qty;
           p.stock = Math.max(0, p.stock - item.qty);
           itemDescriptions.push(`${item.qty}x ${p.name}`);
         }
       });
 
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+
       const newOrder = {
-        id: 'ORD-2026-' + Math.floor(100 + Math.random() * 900),
+        id: 'ORD-' + now.getFullYear() + '-' + Math.floor(100 + Math.random() * 900),
         buyerName,
         buyerAddress,
         itemsText: itemDescriptions.join(', '),
+        productName: firstProdName,
         total: subtotal + shippingCost,
         shipping,
         payment,
         status: 'Menunggu Diproses',
-        date: 'Baru saja'
+        reviewed: false,
+        date: dateStr
       };
 
       state.orders.unshift(newOrder);
       state.cart = [];
-      updateCartBadge();
+      saveState();
       toggleCartDrawer(false);
       renderMarketplace();
-      showToast(`Pesanan ${newOrder.id} berhasil! Cek tab "Penjual UMKM" untuk memproses pesanan.`);
+      showToast(`Pesanan ${newOrder.id} tersimpan! Lihat di Riwayat Pesanan atau Dashboard Penjual.`);
     }
 
-    // -------------------- 6. SELLER DASHBOARD & CRUD --------------------
+    function openBuyerOrdersModal() {
+      renderBuyerOrders();
+      document.getElementById('buyer-orders-modal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function renderBuyerOrders() {
+      const container = document.getElementById('buyer-orders-list');
+      if (state.orders.length === 0) {
+        container.innerHTML = `<p class="text-center text-xs text-slate-500 py-8">Belum ada riwayat pesanan. Silakan checkout produk terlebih dahulu.</p>`;
+        return;
+      }
+      container.innerHTML = state.orders.map(o => `
+        <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-display font-bold text-xs text-localin-800 bg-localin-50 px-2.5 py-1 rounded-lg border border-localin-200">${o.id} • ${o.date}</span>
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-localin-amberDark">${o.status}</span>
+          </div>
+          <div>
+            <p class="text-xs sm:text-sm font-bold text-slate-900">${o.itemsText}</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Total: <strong>${formatRupiah(o.total)}</strong> (${o.shipping} • ${o.payment})</p>
+          </div>
+          ${o.reviewed ? `
+            <p class="text-[11px] text-localin-700 font-semibold">✓ Ulasan Anda sudah terkirim untuk pesanan ini.</p>
+          ` : `
+            <div class="pt-2 border-t border-slate-200/80 flex flex-col sm:flex-row gap-2">
+              <select id="rev-rating-${o.id}" class="px-2.5 py-1.5 text-xs bg-white border border-slate-200 rounded-xl font-semibold">
+                <option value="5">★★★★★ (5)</option>
+                <option value="4">★★★★☆ (4)</option>
+                <option value="3">★★★☆☆ (3)</option>
+              </select>
+              <input type="text" id="rev-text-${o.id}" placeholder="Tulis ulasan kualitas produk UMKM ini..." class="flex-1 px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl" />
+              <button onclick="submitBuyerReview('${o.id}')" class="px-3.5 py-1.5 rounded-xl bg-localin-700 hover:bg-localin-800 text-white text-xs font-semibold shrink-0">Kirim Ulasan</button>
+            </div>
+          `}
+        </div>
+      `).join('');
+    }
+
+    function submitBuyerReview(orderId) {
+      const order = state.orders.find(o => o.id === orderId);
+      const textInput = document.getElementById(`rev-text-${orderId}`);
+      const ratingVal = Number(document.getElementById(`rev-rating-${orderId}`).value || 5);
+      if (!order || !textInput || !textInput.value.trim()) {
+        showToast('Silakan tulis komentar ulasan terlebih dahulu.', 'info');
+        return;
+      }
+
+      state.reviews.unshift({
+        id: 'rev-' + Date.now(),
+        buyer: order.buyerName,
+        product: order.productName || order.itemsText,
+        rating: ratingVal,
+        comment: textInput.value.trim(),
+        reply: ''
+      });
+      order.reviewed = true;
+      saveState();
+      renderBuyerOrders();
+      showToast('Ulasan berhasil dikirim dan muncul di halaman Produk & Dashboard Penjual!');
+    }
+
+    // -------------------- 8. SELLER DASHBOARD & CRUD --------------------
     function switchSellerTab(tabName) {
       document.querySelectorAll('.seller-panel').forEach(p => p.classList.add('hidden'));
       document.getElementById(`seller-panel-${tabName}`).classList.remove('hidden');
@@ -2059,7 +2274,16 @@
       activeBtn.className = 'seller-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-localin-50 text-localin-800 shrink-0 transition-all';
 
       if (tabName === 'ai-suite') populateAiProductDropdown();
+      if (tabName === 'profile') loadSellerProfileForm();
       lucide.createIcons();
+    }
+
+    function loadSellerProfileForm() {
+      document.getElementById('prof-store-name').value = state.sellerProfile.storeName;
+      document.getElementById('prof-store-city').value = state.sellerProfile.city;
+      document.getElementById('prof-store-address').value = state.sellerProfile.address;
+      document.getElementById('prof-store-desc').value = state.sellerProfile.desc;
+      document.getElementById('prof-coords-text').innerText = state.sellerProfile.coords;
     }
 
     function renderSellerDashboard() {
@@ -2069,9 +2293,32 @@
       document.getElementById('seller-order-count-badge').innerText = state.orders.length;
       document.getElementById('metric-seller-products').innerText = `${state.products.length} Produk`;
       document.getElementById('metric-seller-orders').innerText = `${state.orders.length} Pesanan`;
+      document.getElementById('metric-seller-reviews').innerText = `${state.reviews.length} Ulasan`;
 
-      const totalOrderRev = state.orders.reduce((acc, o) => acc + o.total, 4600000);
+      const totalOrderRev = state.orders.reduce((acc, o) => acc + o.total, 0);
       document.getElementById('metric-seller-revenue').innerText = formatRupiah(totalOrderRev);
+
+      // Render Dynamic Category Distribution Chart
+      const catCounts = {};
+      state.products.forEach(p => {
+        catCounts[p.category] = (catCounts[p.category] || 0) + p.stock;
+      });
+      const maxStock = Math.max(1, ...Object.values(catCounts));
+      const chartContainer = document.getElementById('seller-dynamic-chart');
+      chartContainer.innerHTML = Object.entries(catCounts).map(([cat, totalStock]) => {
+        const pct = Math.round((totalStock / maxStock) * 100);
+        return `
+          <div>
+            <div class="flex justify-between text-xs font-semibold mb-1">
+              <span class="text-slate-700">${cat}</span>
+              <span class="text-localin-700">${totalStock} unit stok</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-localin-700 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('') || `<p class="text-xs text-slate-400">Belum ada data produk.</p>`;
 
       // Render Products Table
       const tbody = document.getElementById('seller-products-tbody');
@@ -2108,7 +2355,7 @@
 
       // Render Orders List
       const ordersList = document.getElementById('seller-orders-list');
-      ordersList.innerHTML = state.orders.map(o => `
+      ordersList.innerHTML = state.orders.length > 0 ? state.orders.map(o => `
         <div class="p-4 rounded-2xl border border-slate-200/90 bg-slate-50/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div class="space-y-1">
             <div class="flex flex-wrap items-center gap-2">
@@ -2132,16 +2379,16 @@
             </select>
           </div>
         </div>
-      `).join('');
+      `).join('') : `<p class="text-xs text-slate-500">Belum ada pesanan masuk.</p>`;
 
       // Render Reviews List
       const revList = document.getElementById('seller-reviews-list');
-      revList.innerHTML = state.reviews.map(r => `
+      revList.innerHTML = state.reviews.length > 0 ? state.reviews.map(r => `
         <div class="p-4 rounded-2xl border border-slate-200/80 bg-white space-y-3">
           <div class="flex items-center justify-between">
             <div>
               <p class="font-bold text-sm text-slate-900">${r.buyer} <span class="text-xs font-normal text-slate-400">membeli ${r.product}</span></p>
-              <span class="text-xs text-amber-500">★★★★★</span>
+              <span class="text-xs text-amber-500">${'★'.repeat(r.rating || 5)}</span>
             </div>
           </div>
           <p class="text-xs sm:text-sm text-slate-700">"${r.comment}"</p>
@@ -2156,7 +2403,7 @@
             </div>
           `}
         </div>
-      `).join('');
+      `).join('') : `<p class="text-xs text-slate-500">Belum ada ulasan pelanggan.</p>`;
 
       lucide.createIcons();
     }
@@ -2213,7 +2460,7 @@
         const idx = state.products.findIndex(p => p.id === editId);
         if (idx !== -1) {
           state.products[idx] = { ...state.products[idx], name, category, price, stock, desc, image };
-          showToast('Perubahan produk berhasil disimpan & disinkronkan!');
+          showToast('Perubahan produk disimpan ke localStorage!');
         }
       } else {
         state.products.unshift({
@@ -2223,15 +2470,18 @@
           price,
           stock,
           rating: 5.0,
-          distanceKm: 1.2,
+          lat: state.userCoords.lat + 0.008,
+          lng: state.userCoords.lng + 0.006,
+          distanceKm: 1.1,
           storeName: state.sellerProfile.storeName,
           address: state.sellerProfile.city,
           image,
           desc
         });
-        showToast('Produk baru berhasil ditambahkan ke Katalog Marketplace!');
+        showToast('Produk baru berhasil ditambahkan & tersimpan!');
       }
 
+      saveState();
       closeModal('product-form-modal');
       renderSellerDashboard();
       renderMarketplace();
@@ -2239,6 +2489,7 @@
 
     function deleteProduct(productId) {
       state.products = state.products.filter(p => p.id !== productId);
+      saveState();
       renderSellerDashboard();
       renderMarketplace();
       showToast('Produk telah dihapus dari katalog.');
@@ -2248,6 +2499,7 @@
       const order = state.orders.find(o => o.id === orderId);
       if (order) {
         order.status = newStatus;
+        saveState();
         showToast(`Status pesanan ${orderId} diubah menjadi "${newStatus}"`);
       }
     }
@@ -2258,6 +2510,7 @@
       const rev = state.reviews.find(r => r.id === reviewId);
       if (rev) {
         rev.reply = input.value.trim();
+        saveState();
         renderSellerDashboard();
         showToast('Balasan ulasan berhasil dipublikasikan!');
       }
@@ -2282,11 +2535,12 @@
       state.sellerProfile.city = document.getElementById('prof-store-city').value.trim();
       state.sellerProfile.address = document.getElementById('prof-store-address').value.trim();
       state.sellerProfile.desc = document.getElementById('prof-store-desc').value.trim();
+      saveState();
       renderSellerDashboard();
-      showToast('Profil & titik lokasi GPS toko berhasil diperbarui!');
+      showToast('Profil & titik lokasi GPS toko berhasil disimpan!');
     }
 
-    // -------------------- 7. SELLER AI MARKETING SUITE (4 TOOLS) --------------------
+    // -------------------- 9. SELLER AI MARKETING SUITE --------------------
     function switchAiTool(toolId) {
       document.querySelectorAll('.aitool-panel').forEach(p => p.classList.add('hidden'));
       document.getElementById(`aitool-panel-${toolId}`).classList.remove('hidden');
@@ -2318,35 +2572,44 @@
       btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>AI Sedang Menyusun...</span>`;
       lucide.createIcons();
 
-      try {
-        const apiKey = "";
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-        const payload = {
-          contents: [{ parts: [{ text: promptText }] }],
-          systemInstruction: {
-            parts: [{ text: "Kamu adalah konsultan AI Marketing spesialis UMKM Indonesia di platform LOCALIN. Berikan jawaban berbahasa Indonesia yang terstruktur rapi, praktis, hangat, dan siap langsung digunakan pelaku UMKM tanpa menggunakan format markdown rumit seperti tanda bintang ganda berlebihan." }]
+      const userApiKey = localStorage.getItem(API_STORAGE_KEY);
+      let usedLiveApi = false;
+
+      if (userApiKey) {
+        try {
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(userApiKey)}`;
+          const payload = {
+            contents: [{ parts: [{ text: promptText }] }],
+            systemInstruction: {
+              parts: [{ text: "Kamu adalah konsultan AI Marketing spesialis UMKM Indonesia di platform LOCALIN. Berikan jawaban berbahasa Indonesia yang terstruktur rapi, praktis, hangat, dan siap langsung digunakan pelaku UMKM." }]
+            }
+          };
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (response.ok) {
+            const result = await response.json();
+            const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (text) {
+              outputEl.innerText = text;
+              usedLiveApi = true;
+            }
           }
-        };
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (response.ok) {
-          const result = await response.json();
-          const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
-          outputEl.innerText = text || fallbackText;
-        } else {
-          outputEl.innerText = fallbackText;
+        } catch (err) {
+          // Fallback seamlessly
         }
-      } catch (err) {
-        outputEl.innerText = fallbackText;
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = originalBtnHtml;
-        lucide.createIcons();
-        showToast('Materi AI Marketing berhasil dibuat!');
       }
+
+      if (!usedLiveApi) {
+        outputEl.innerText = `[MODE SIMULASI TEMPLATE LOKAL — Masukkan Gemini API Key untuk generasi AI dinamis penuh]\n\n` + fallbackText;
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = originalBtnHtml;
+      lucide.createIcons();
+      showToast(usedLiveApi ? 'Hasil dihasilkan langsung oleh Gemini AI!' : 'Materi disusun dengan Mode Simulasi Lokal.');
     }
 
     function generateAiContent() {
@@ -2356,7 +2619,7 @@
 
       const prompt = `Buatkan materi promosi lengkap untuk produk UMKM "${name}" dengan keunggulan: "${usp}". Gunakan gaya bahasa "${tone}". Sertakan: 1) Caption Instagram menarik + CTA, 2) Ide Hook Video TikTok/Reels 15 detik, 3) Deskripsi singkat untuk katalog Marketplace LOCALIN, dan 4) 8 Hashtag lokal relevan.`;
 
-      const fallback = `📱 CAPTION INSTAGRAM & WHATSAPP:\nLagi cari ${name} yang asli dan dibuat sepenuh hati oleh pengrajin lokal? ✨\nKenalin, ${name}! ${usp}\nCocok banget buat nemenin aktivitas harianmu maupun dijadikan buah tangan spesial untuk orang terdekat. Yuk pesan sekarang lewat LOCALIN sebelum kehabisan stok hari ini! 🛒💚\n\n🎬 HOOK VIDEO TIKTOK / REELS (15 DETIK):\n"Jujur baru tahu kalau di dekat sini ada ${name} sebagus dan seotentik ini! Lihat detail proses pembuatannya..."\n\n🛍️ DESKRIPSI MARKETPLACE:\n${name} — Produk unggulan UMKM lokal terverifikasi. ${usp} Dikemas higienis, kualitas terjamin, dan siap kirim instan ke lokasi Anda.\n\n#UMKMLokal #LocalinIndonesia #BanggaBuatanIndonesia #ProdukLokal #KulinerLokal #KriyaNusantara #BelanjaDekatRumah #SupportLocalUMKM`;
+      const fallback = `📱 CAPTION INSTAGRAM & WHATSAPP (${tone}):\nLagi cari ${name} yang asli dan dibuat sepenuh hati oleh pengrajin lokal? ✨\nKenalin, ${name}! ${usp}\nCocok banget buat nemenin aktivitas harianmu maupun dijadikan buah tangan spesial. Yuk pesan sekarang lewat LOCALIN sebelum kehabisan stok hari ini! 🛒💚\n\n🎬 HOOK VIDEO TIKTOK / REELS (15 DETIK):\n"Jujur baru tahu kalau di dekat sini ada ${name} sebagus dan seotentik ini! Lihat detail proses pembuatannya..."\n\n🛍️ DESKRIPSI MARKETPLACE:\n${name} — Produk unggulan UMKM lokal terverifikasi. ${usp} Dikemas higienis, kualitas terjamin, dan siap kirim instan ke lokasi Anda.\n\n#UMKMLokal #LocalinIndonesia #BanggaBuatanIndonesia #ProdukLokal #KulinerLokal #KriyaNusantara #BelanjaDekatRumah #SupportLocalUMKM`;
 
       callGeminiWithFallback(prompt, fallback, 'ai-cg-output', 'btn-gen-content', `<i data-lucide="sparkles" class="w-4 h-4"></i><span>Buat Caption & Deskripsi AI</span>`);
     }
@@ -2366,9 +2629,9 @@
       const goal = document.getElementById('ai-st-goal').value;
       const budget = document.getElementById('ai-st-budget').value;
 
-      const prompt = `Berikan strategi pemasaran praktis untuk UMKM kategori "${cat}" dengan tujuan "${goal}" dan anggaran "${budget}". Buat dalam 4 poin aksi nyata yang mudah dijalankan.`;
+      const prompt = `Berikan strategi pemasaran praktis untuk UMKM kategori "${cat}" dengan tujuan "${goal}" dan anggaran "${budget}". Buat dalam 4 poin aksi nyata.`;
 
-      const fallback = `🎯 RENCANA STRATEGI PEMASARAN UMKM (${cat.toUpperCase()})\n\n1. PAKET BUNDLING HEMAT ("Teman Setia")\nGabungkan produk terlaris dengan produk pelengkap (diskon paket 10%) untuk menaikkan nilai rata-rata transaksi setiap pembeli.\n\n2. OPTIMASI RADIUS LOKAL GPS (0 - 5 KM)\nAktifkan opsi "Ambil di Toko (Gratis Ongkir)" dan berikan bonus tester gratis bagi pembeli di kecamatan yang sama untuk memicu ulasan bintang 5 pertama.\n\n3. KAMPANYE STORYTELLING DI BALIK LAYAR\nUnggah proses pembuatan produk secara jujur dan bersih 3x seminggu. Pembeli lokal sangat menyukai transparansi dan cerita perjuangan UMKM.\n\n4. KARTU UCAPAN & VOUCHER REPEAT ORDER\nSertakan kartu terima kasih bertuliskan kode promo 10% untuk pembelian kedua melalui platform LOCALIN.`;
+      const fallback = `🎯 RENCANA STRATEGI PEMASARAN UMKM (${cat.toUpperCase()})\nTarget: ${goal} | Anggaran: ${budget}\n\n1. PAKET BUNDLING HEMAT ("Teman Setia")\nGabungkan produk terlaris dengan produk pelengkap (diskon paket 10%) untuk menaikkan nilai rata-rata transaksi setiap pembeli.\n\n2. OPTIMASI RADIUS LOKAL GPS (0 - 5 KM)\nAktifkan opsi "Ambil di Toko (Gratis Ongkir)" dan berikan bonus tester gratis bagi pembeli di kecamatan yang sama.\n\n3. KAMPANYE STORYTELLING DI BALIK LAYAR\nUnggah proses pembuatan produk secara jujur dan bersih 3x seminggu.\n\n4. VOUCHER REPEAT ORDER\nSertakan kartu terima kasih bertuliskan kode promo 10% untuk pembelian kedua melalui platform LOCALIN.`;
 
       callGeminiWithFallback(prompt, fallback, 'ai-st-output', 'btn-gen-strategy', `<i data-lucide="compass" class="w-4 h-4"></i><span>Susun Strategi Pemasaran AI</span>`);
     }
@@ -2378,9 +2641,9 @@
       const price = document.getElementById('ai-tm-price').value;
       const scope = document.getElementById('ai-tm-scope').value;
 
-      const prompt = `Analisis target pasar untuk produk UMKM "${prod}" dengan harga "${price}" dan jangkauan "${scope}". Sebutkan segmen utama, segmen sekunder, pemicu pembelian, dan jam posting media sosial terbaik.`;
+      const prompt = `Analisis target pasar untuk produk UMKM "${prod}" dengan harga "${price}" dan jangkauan "${scope}".`;
 
-      const fallback = `📊 ANALISIS TARGET PASAR: ${prod.toUpperCase()}\n\n1. SEGMEN UTAMA (60% Potensi Pembeli)\n• Usia: 24 – 42 tahun (Pekerja muda, keluarga muda, & pecinta produk lokal)\n• Karakteristik: Menghargai kualitas otentik, estetika produk, dan senang mendukung usaha kecil di sekitar tempat tinggal mereka.\n\n2. SEGMEN SEKUNDER (40% Potensi Pembeli)\n• Wisatawan domestik & pencari hampers/kado khas daerah dengan rentang harga ${price}.\n\n3. PEMICU KEPUTUSAN BELI\n• Foto produk yang terang dan jelas, ulasan positif pembeli sebelumnya, serta kemudahan pengiriman instan/COD.\n\n⏰ JAM POSTING TERBAIK:\n• Hari Kerja: Pukul 12.00 – 13.00 WIB (istirahat siang) & 19.30 – 21.00 WIB.\n• Akhir Pekan: Pukul 09.00 – 11.00 WIB.`;
+      const fallback = `📊 ANALISIS TARGET PASAR: ${prod.toUpperCase()}\nRentang Harga: ${price} | Jangkauan: ${scope}\n\n1. SEGMEN UTAMA (60% Potensi Pembeli)\n• Usia: 24 – 42 tahun (Pekerja muda, keluarga muda, & pecinta produk lokal)\n• Karakteristik: Menghargai kualitas otentik dan senang mendukung usaha kecil di sekitar tempat tinggal mereka.\n\n2. SEGMEN SEKUNDER (40% Potensi Pembeli)\n• Wisatawan domestik & pencari hampers/kado khas daerah.\n\n3. JAM POSTING TERBAIK:\n• Hari Kerja: Pukul 12.00 – 13.00 WIB & 19.30 – 21.00 WIB.\n• Akhir Pekan: Pukul 09.00 – 11.00 WIB.`;
 
       callGeminiWithFallback(prompt, fallback, 'ai-tm-output', 'btn-gen-tm', `<i data-lucide="pie-chart" class="w-4 h-4"></i><span>Analisis Target Pasar AI</span>`);
     }
@@ -2392,16 +2655,32 @@
 
       const prompt = `Buatkan jadwal konten mingguan (Senin sampai Minggu) untuk UMKM "${brand}" di platform "${platform}" dengan tema "${theme}".`;
 
-      const fallback = `📅 KALENDER KONTEN 7 HARI — ${brand.toUpperCase()}\nPlatform: ${platform}\n\n• SENIN (Edukasi & Bahan Baku): Foto close-up bahan lokal pilihan yang dipakai. CTA: "Tebak bahan rahasia kami di komentar!"\n• SELASA (Behind The Scene): Video singkat 15 detik proses produksi/pengemasan yang higienis.\n• RABU (Testimoni Pelanggan): Bagikan tangkapan layar ulasan bintang 5 dari pembeli LOCALIN.\n• KAMIS (Tips & Manfaat): Edukasi cara menikmati atau merawat produk agar awet.\n• JUMAT (Promo Akhir Pekan): Pengumuman paket bundling spesial Jumat–Minggu.\n• SABTU (Konten Interaktif): Polling di Story tentang varian produk favorit minggu ini.\n• MINGGU (Cerita Komunitas): Apresiasi untuk pelanggan lokal yang sudah mampir & pesan minggu ini.`;
+      const fallback = `📅 KALENDER KONTEN 7 HARI — ${brand.toUpperCase()}\nPlatform: ${platform} | Tema: ${theme}\n\n• SENIN (Edukasi & Bahan Baku): Foto close-up bahan lokal pilihan yang dipakai.\n• SELASA (Behind The Scene): Video singkat 15 detik proses produksi/pengemasan higienis.\n• RABU (Testimoni Pelanggan): Bagikan ulasan bintang 5 dari pembeli LOCALIN.\n• KAMIS (Tips & Manfaat): Edukasi cara menikmati atau merawat produk agar awet.\n• JUMAT (Promo Akhir Pekan): Pengumuman paket bundling spesial Jumat–Minggu.\n• SABTU (Konten Interaktif): Polling di Story tentang varian produk favorit.\n• MINGGU (Cerita Komunitas): Apresiasi untuk pelanggan lokal minggu ini.`;
 
       callGeminiWithFallback(prompt, fallback, 'ai-cp-output', 'btn-gen-cp', `<i data-lucide="calendar-check" class="w-4 h-4"></i><span>Buat Jadwal Konten 7 Hari</span>`);
     }
 
-    // -------------------- 8. ADMIN ECOSYSTEM DASHBOARD --------------------
+    // -------------------- 10. ADMIN ECOSYSTEM DASHBOARD --------------------
+    function switchAdminTab(tab) {
+      document.querySelectorAll('.admin-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById(`admin-panel-${tab}`).classList.remove('hidden');
+
+      document.querySelectorAll('.admin-subtab').forEach(b => {
+        b.className = 'admin-subtab px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 border border-slate-200';
+      });
+      document.getElementById(`admtab-${tab}`).className = 'admin-subtab px-4 py-2 rounded-xl text-xs font-bold bg-localin-700 text-white';
+    }
+
     function renderAdminDashboard() {
+      document.getElementById('admin-stat-stores').innerText = `${state.adminStores.length} Mitra`;
       document.getElementById('admin-stat-products').innerText = `${state.products.length} Produk`;
-      const tbody = document.getElementById('admin-stores-tbody');
-      tbody.innerHTML = state.adminStores.map(st => {
+      const gmv = state.orders.reduce((s, o) => s + o.total, 0);
+      document.getElementById('admin-stat-gmv').innerText = formatRupiah(gmv);
+      document.getElementById('admin-stat-order-count').innerText = `${state.orders.length} Transaksi tercatat`;
+      document.getElementById('admin-stat-users').innerText = `${state.registeredUsers.length} Akun`;
+
+      // Stores table
+      document.getElementById('admin-stores-tbody').innerHTML = state.adminStores.map(st => {
         const isVerified = st.status === 'Terverifikasi';
         return `
           <tr class="hover:bg-slate-50/70">
@@ -2423,18 +2702,77 @@
           </tr>
         `;
       }).join('');
+
+      // Products moderation table
+      document.getElementById('admin-products-tbody').innerHTML = state.products.map(p => `
+        <tr class="hover:bg-slate-50/70">
+          <td class="py-3 px-3 font-bold text-slate-900">${p.name}</td>
+          <td class="py-3 px-3 text-slate-600">${p.storeName}</td>
+          <td class="py-3 px-3 text-slate-500">${p.category}</td>
+          <td class="py-3 px-3 font-semibold text-localin-700">${formatRupiah(p.price)}</td>
+          <td class="py-3 px-3 text-right">
+            <button onclick="adminDeleteProduct('${p.id}')" class="px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 text-xs font-semibold">Hapus Produk</button>
+          </td>
+        </tr>
+      `).join('');
+
+      // Transactions table
+      document.getElementById('admin-transactions-tbody').innerHTML = state.orders.map(o => `
+        <tr class="hover:bg-slate-50/70">
+          <td class="py-3 px-3 font-bold text-localin-800">${o.id}</td>
+          <td class="py-3 px-3 text-slate-700">${o.buyerName}</td>
+          <td class="py-3 px-3 text-slate-600">${o.itemsText}</td>
+          <td class="py-3 px-3 font-bold text-slate-900">${formatRupiah(o.total)}</td>
+          <td class="py-3 px-3"><span class="px-2.5 py-0.5 rounded-full bg-localin-50 text-localin-700 text-xs font-semibold">${o.status}</span></td>
+        </tr>
+      `).join('');
+
+      // Users table
+      document.getElementById('admin-users-tbody').innerHTML = state.registeredUsers.map(u => `
+        <tr class="hover:bg-slate-50/70">
+          <td class="py-3 px-3 font-bold text-slate-900">${u.name}</td>
+          <td class="py-3 px-3 text-slate-600">${u.email}</td>
+          <td class="py-3 px-3 font-semibold text-localin-700">${u.role}</td>
+          <td class="py-3 px-3"><span class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold">${u.status}</span></td>
+        </tr>
+      `).join('');
     }
 
     function toggleStoreVerification(storeId, newStatus) {
       const store = state.adminStores.find(s => s.id === storeId);
       if (store) {
         store.status = newStatus;
+        saveState();
         renderAdminDashboard();
         showToast(`Status mitra "${store.name}" diperbarui menjadi ${newStatus}`);
       }
     }
 
-    // -------------------- 9. AUTHENTICATION MODAL --------------------
+    function adminDeleteProduct(productId) {
+      state.products = state.products.filter(p => p.id !== productId);
+      saveState();
+      renderAdminDashboard();
+      renderMarketplace();
+      showToast('Produk dihapus oleh Administrator.');
+    }
+
+    function exportReportCsv() {
+      const headers = ['ID Pesanan', 'Tanggal', 'Pembeli', 'Produk', 'Total (Rp)', 'Pengiriman', 'Pembayaran', 'Status'];
+      const rows = state.orders.map(o => [
+        o.id, o.date, `"${o.buyerName}"`, `"${o.itemsText}"`, o.total, o.shipping, o.payment, o.status
+      ]);
+      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', 'laporan_transaksi_localin.csv');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('Laporan transaksi CSV berhasil diunduh!');
+    }
+
+    // -------------------- 11. AUTHENTICATION MODAL --------------------
     function openAuthModal() {
       document.getElementById('auth-modal').classList.remove('hidden');
     }
@@ -2453,18 +2791,25 @@
       const customName = document.getElementById('auth-input-name').value.trim();
       const email = document.getElementById('auth-input-email').value.trim();
       const displayName = customName || email.split('@')[0];
+      const roleLabel = role === 'buyer' ? 'Pembeli' : role === 'seller' ? 'Penjual UMKM' : 'Admin';
 
-      state.user = { loggedIn: true, name: displayName, role };
+      state.user = { loggedIn: true, name: displayName, email, role };
+      if (!state.registeredUsers.some(u => u.email === email)) {
+        state.registeredUsers.push({ name: displayName, email, role: roleLabel, status: 'Aktif' });
+      }
       document.getElementById('nav-user-name').innerText = displayName;
+      saveState();
       closeModal('auth-modal');
       switchRole(role);
-      showToast(`Selamat datang, ${displayName}! Anda masuk sebagai ${role === 'buyer' ? 'Pembeli' : role === 'seller' ? 'Penjual UMKM' : 'Admin'}.`);
+      showToast(`Selamat datang, ${displayName}! Anda masuk sebagai ${roleLabel}.`);
     }
 
-    // -------------------- 10. INITIALIZATION --------------------
+    // -------------------- 12. INITIALIZATION --------------------
     window.addEventListener('DOMContentLoaded', () => {
-      updateCartBadge();
-      renderMarketplace();
+      document.getElementById('nav-user-name').innerText = state.user.name || 'Masuk';
+      document.getElementById('nav-gps-label').innerText = `${state.gpsLocation.split(',')[0]} (GPS)`;
+      syncGlobalCounters();
+      switchRole(state.currentRole || 'buyer');
       runAiBuyerRecommendation();
       lucide.createIcons();
     });
